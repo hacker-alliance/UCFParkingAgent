@@ -53,9 +53,9 @@ restService.post("/garage", function(req, res) {
     : "Seems like some problem. Speak again.";*/
 
   return res.json({
-    "speech": req.body.queryResult.parameters.garage,
-    "displayText": req.body.queryResult.parameters.garage,
-    "source": "webhook-echo-sample"
+    speech: req.body.queryResult.parameters.garage,
+    displayText: req.body.queryResult.parameters.garage,
+    source: "webhook-echo-sample"
   });
 });
 
