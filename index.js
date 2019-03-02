@@ -32,7 +32,7 @@ var garage_capacity = {
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
-    return (count < 50) ? "Only " + count.toString() + " spots left!" : "Ooo there's " + count.toString() + " spots left!";
+    return (count < 50) ? "Only " + count.toString() + " spots left!" : "There's " + count.toString() + " spots left!";
   },
   1: function(garage, count) {
     return "There's " + count.toString() + " parking spots";
