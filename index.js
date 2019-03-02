@@ -37,10 +37,13 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/garage", function(req, res) {
-  var garageAvail = [];
-
   scrape_garage().then(function(garageJSON){
-    return intents[req.body.queryResult.intent.displayName](req, res, garageJSON);
+    var intent = intents[req.body.queryResult.intent.displayName];
+
+    if (intent)
+      return intent(req, res, garageJSON);
+
+    return res.json({});
   })
 });
 
