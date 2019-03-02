@@ -23,12 +23,12 @@ restService.post("/echo", function(req, res) {
   //     ? req.body.result.parameters.echoText
   //     : "Seems like some problem. Speak again.";
   var speech =
-    req &&
-    req.query &&
-    req.query.echoText
-    ? req.query.echoText
+    req.body &&
+    req.body.queryResult &&
+    req.body.queryResult.queryText
+    ? req.body.queryResult.queryText
     : "Seems like some problem. Speak again.";
-    
+
   return res.json({
     speech: speech,
     displayText: speech,
