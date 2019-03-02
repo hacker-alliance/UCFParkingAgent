@@ -118,7 +118,7 @@ function intentSpotsLeft(req, res, garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-  if (flavorCounter >= flavortextSpotsLeft.length)
+  if (flavorCounter > flavortextSpotsLeft.length)
     flavorCounter = 0;
   else
     flavorCounter++;
@@ -141,7 +141,7 @@ function intentSpotsTotal(req,res,garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-  if (flavorCounter >= flavortextSpotsTotal.length)
+  if (flavorCounter > flavortextSpotsTotal.length)
     flavorCounter = 0;
   else
     flavorCounter++;
