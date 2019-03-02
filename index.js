@@ -62,10 +62,10 @@ restService.post("/garage", function(req, res) {
   		//Get Garage Load
   		garageAvail[i] = $(this).text();
   	});
-  }));
 
-  console.log(garageAvail);
-  console.log(garageAvail[garages[req.body.queryResult.parameters.garage]])
+    console.log(garageAvail);
+    console.log(garageAvail[garages[req.body.queryResult.parameters.garage]])
+  }));
 
   return res.json({
     "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
