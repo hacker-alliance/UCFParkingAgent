@@ -54,7 +54,7 @@ restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
   var garageAvail = [];
 
-  await request(url, (function (error, response, body) {
+  return request(url, (function (error, response, body) {
   	const $ = cheerio.load(body);
   	//Garages Are Stored in Strong Elements
   	//For Each Strong Element
@@ -65,11 +65,12 @@ restService.post("/garage", function(req, res) {
 
     console.log(garageAvail);
     console.log(garageAvail[garages[req.body.queryResult.parameters.garage]])
+    return res.json({
+      "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
+    });
   }));
 
-  return res.json({
-    "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
-  });
+
 });
 
 restService.post("/audio", function(req, res) {
