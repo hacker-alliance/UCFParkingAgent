@@ -52,6 +52,7 @@ restService.post("/echo", function(req, res) {
 restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
   var garageAvail = [];
+  var result = "";
   rp(url)
   .then(function(html){
     //success!
@@ -61,14 +62,12 @@ restService.post("/garage", function(req, res) {
     });
 
     console.log(garageAvail);
-    console.log(garageAvail[garages[req.body.queryResult.parameters.garage]]);
+    result = garageAvail[garages[req.body.queryResult.parameters.garage]];
 
   })
   .catch(function(err){
     //handle error
   });
-
-  var result = "Test: " + garageAvail[garages[req.body.queryResult.parameters.garage]] + " yes";
 
   console.log(result);
 
