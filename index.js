@@ -2,9 +2,8 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const request = require('request');
-const cheerio = require('cheerio');
-const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
+const scrape_garage = require("./scrape-ucf-garage");
+const predict_garage = require("./prediction-ucf-garage");
 
 const restService = express();
 
@@ -47,23 +46,7 @@ restService.post("/garage", function(req, res) {
   })
 });
 
-function scrape_garage(){
-  var garageAvail = [];
 
-  return new Promise((resolve,reject)=>{
-    request(url, (function (error, response, body) {
-    	const $ = cheerio.load(body);
-
-      // Parse and save garage parking spaces number
-    	$('strong').each(function(i, elem) {
-    		//Get Garage Load
-    		garageAvail[i] = $(this).text();
-      });
-
-      resolve(garageAvail);
-    }));
-  })
-}
 
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");

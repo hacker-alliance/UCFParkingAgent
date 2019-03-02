@@ -1,16 +1,30 @@
 {
-  "name": "webhook-echo-sample",
+  "name": "ucf-garage-assistant",
   "version": "1.0.0",
-  "description": "Webhook echo sample",
+  "description": "A helper for ucf students and incorporating it into Google Assistant",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
+  "directories": {
+    "test": "test"
   },
-  "author": "Sunil Syal",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.4",
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
     "request": "^2.88.0",
-    "cheerio": "^1.0.0-rc.2"
-  }
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/potato-apple-star/UCFParkingAssistant.git"
+  },
+  "author": "[nabakin, nayoshi12, burgly]",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/potato-apple-star/UCFParkingAssistant/issues"
+  },
+  "homepage": "https://github.com/potato-apple-star/UCFParkingAssistant#readme"
 }
