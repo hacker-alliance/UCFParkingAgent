@@ -54,11 +54,11 @@ restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
   var garageAvail = [];
 
-  request(url, (function (error, response, body) {
+  await request(url, (function (error, response, body) {
   	const $ = cheerio.load(body);
   	//Garages Are Stored in Strong Elements
   	//For Each Strong Element
-  	await $('strong').each(function(i, elem) {
+  	$('strong').each(function(i, elem) {
   		//Get Garage Load
   		garageAvail[i] = $(this).text();
   	});
