@@ -76,7 +76,7 @@ restService.listen(process.env.PORT || 8000, function() {
 
 var intents = {
   "SpotsLeft": intentSpotsLeft,
-  "SpotsTotal": intentSpotsTotal
+  "SpotsTaken": intentSpotsTaken
 }
 
 
@@ -84,7 +84,7 @@ var intents = {
 
 
 var flavorCounter = 0;
-var flavortextSpotsTotal = {
+var flavortextSpotsTaken = {
   0: function(garage, count,total){
     return "In "+garage +", there are "+ count+" cars parked out of "+total;
   },
@@ -137,15 +137,15 @@ function intentSpotsLeft(req, res, garageJSON){
     }
   });
 }
-function intentSpotsTotal(req,res,garageJSON){
+function intentSpotsTaken(req,res,garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
 
 
   if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
-    if (flavorCounter < flavortextSpotsTotal.length)
+    responseText = flavortextSpotsTaken[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
+    if (flavorCounter < flavortextSpotsTaken.length)
       flavorCounter++;
     else
       flavorCounter = 0;
