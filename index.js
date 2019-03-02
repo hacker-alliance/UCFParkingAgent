@@ -66,7 +66,7 @@ restService.post("/garage", function(req, res) {
   });
 
   return res.json({
-    "fulfillmentText": garageAvail[garage[req.body.queryResult.parameters.garage]]
+    "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
   });
 });
 
