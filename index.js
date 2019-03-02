@@ -10,13 +10,13 @@ const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 const restService = express();
 
 var garages = {
-  "A":5,
-  "B":6,
-  "C":7,
-  "D":2,
-  "H":3,
-  "I":5,
-  "Libra": 5
+  "A": 0,
+  "B": 1,
+  "C": 2,
+  "D": 3,
+  "H": 4,
+  "I": 5,
+  "Libra": 6
 }
 
 restService.use(
@@ -51,11 +51,11 @@ restService.post("/echo", function(req, res) {
 
 restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
-
+  var garage_fill
   rp(url)
   .then(function(html){
     //success!
-    console.log($('strong', html)[garages[req.body.queryResult.parameters.garage]].next.data);
+    console.log($('strong', html).text());
 
   })
   .catch(function(err){
