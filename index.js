@@ -83,7 +83,7 @@ var intents = {
 
 
 
-var flavorCounter = 0;
+
 var flavortextSpotsTaken = {
   0: function(garage, count,total){
     return "In "+garage +", there are "+ count+" cars parked out of "+total;
@@ -96,6 +96,7 @@ var flavortextSpotsTaken = {
   }
 
 }
+
 var flavortextSpotsLeft = {
   0: function(garage, count) {
     return (count < 50) ? "Only " + count.toString() + " spots left!" : "There's " + count.toString() + " spots left!";
@@ -113,19 +114,19 @@ var flavortextSpotsLeft = {
     return "There are " + count.toString() + " spots left in garage " + garage;
   }
 }
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+var flavorCounter1 = getRandomInt(5);
+var flavorCounter2 = getRandomInt(3);
 function intentSpotsLeft(req, res, garageJSON){
+  flavorCounter1 = getRandomInt(5);
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
 
-
   if (garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
-    if (flavorCounter >= flavortextSpotsLeft.length)
-      flavorCounter = 0;
-    else
-      flavorCounter++;
+    responseText = flavortextSpotsLeft[flavorCounter1](garage_name, parseInt(garageJSON[garages[garage_name]]));
 
 
   return res.json({
@@ -138,18 +139,14 @@ function intentSpotsLeft(req, res, garageJSON){
   });
 }
 function intentSpotsTaken(req,res,garageJSON){
+  flavorCounter2 = getRandomInt(3);
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
 
-
   if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTaken[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
-    console.log(flavorCounter);
-    if (flavorCounter < flavortextSpotsTaken.length)
-      flavorCounter++;
-    else
-      flavorCounter = 0;
+    responseText = flavortextSpotsTaken[flavorCounter2](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
+
 
   return res.json({
       "fulfillmentText": responseText,
