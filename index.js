@@ -67,7 +67,7 @@ restService.post("/garage", function(req, res) {
     console.log(garageJSON[garages[garage_name]])
 
     if (garageJSON[garages[garage_name]])
-      responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garage_capacity[garage_name])-parseInt(garageJSON[garages[garage_name]]));
+      responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
 
     console.log(responseText)
 
