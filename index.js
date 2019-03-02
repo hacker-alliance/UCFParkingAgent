@@ -53,20 +53,7 @@ restService.post("/garage", function(req, res) {
     : "Seems like some problem. Speak again.";*/
 
   return res.json({
-    "payload": {
-      req.body.originalDetectIntentRequest.source: {
-        "expectUserResponse": false,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": req.body.queryResult.parameters.garage
-              }
-            }
-          ]
-        }
-      }
-    }
+    "speech": req.body.queryResult.parameters.garage
   });
 });
 
