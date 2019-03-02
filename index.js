@@ -58,7 +58,7 @@ restService.post("/garage", function(req, res) {
   	const $ = cheerio.load(body);
   	//Garages Are Stored in Strong Elements
   	//For Each Strong Element
-  	$('strong').each(function(i, elem) {
+  	await $('strong').each(function(i, elem) {
   		//Get Garage Load
   		garageAvail[i] = $(this).text();
   	});
