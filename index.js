@@ -7,6 +7,18 @@ const predict_garage = require("./prediction-ucf-garage");
 
 const restService = express();
 
+const {
+  dialogflow,
+  actionssdk,
+  Image,
+  Table,
+  Carousel,
+  Permission,
+} = require('actions-on-google');
+
+const app = dialogflow();
+
+
 var garages = {
   "A": 0,
   "B": 1,
@@ -61,7 +73,8 @@ function getRandomInt(max) {
 
 var intents = {
   "SpotsLeft": intentSpotsLeft,
-  "SpotsTaken": intentSpotsTaken
+  "SpotsTaken": intentSpotsTaken,
+  "GaragePrediction": intentGaragePrediction
 }
 
 
@@ -135,3 +148,15 @@ function intentSpotsTaken(req,res,garageJSON){
     }
   });
 }
+
+app.intent('GaragePrediction', (conv) => {
+  // Choose one or more supported permissions to request:
+  // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
+  const options = {
+    context: 'To address you by name and know your location',
+    // Ask for more than one permission. User can authorize all or none.
+    permissions: ['DEVICE_PRECISE_LOCATION'],
+  };
+
+  conv.ask(new Permission(options));
+});
