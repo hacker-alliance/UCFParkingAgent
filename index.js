@@ -63,8 +63,13 @@ restService.post("/garage", function(req, res) {
     var garage_name = req.body.queryResult.parameters.garage;
     var responseText;
 
-    if (!garageAvail[garages[garage_name]])
-      responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garage_capacity[garage_name])-parseInt(garageAvail[garages[garage_name]]));
+    console.log(garage_name)
+    console.log(garageJSON[garages[garage_name]])
+
+    if (garageJSON[garages[garage_name]])
+      responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garage_capacity[garage_name])-parseInt(garageJSON[garages[garage_name]]));
+
+    console.log(responseText)
 
     if (flavorCounter >= 4)
       flavorCounter = 0;
