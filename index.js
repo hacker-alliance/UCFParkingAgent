@@ -61,7 +61,7 @@ restService.post("/garage", function(req, res) {
     });
 
     console.log(garageAvail);
-    console.log(garages[req.body.queryResult.parameters.garage]);
+    console.log(garageAvail[garages[req.body.queryResult.parameters.garage]]);
 
   })
   .catch(function(err){
