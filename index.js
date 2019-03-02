@@ -18,6 +18,19 @@ const {
 
 const app = dialogflow();
 
+app.intent('GaragePrediction', (conv) => {
+  // Choose one or more supported permissions to request:
+  // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
+  const options = {
+    context: 'To address you by name and know your location',
+    // Ask for more than one permission. User can authorize all or none.
+    permissions: ['DEVICE_PRECISE_LOCATION'],
+  };
+
+  console.log("test");
+
+  conv.ask(new Permission(options));
+});
 
 var garages = {
   "A": 0,
@@ -147,15 +160,3 @@ function intentSpotsTaken(req,res,garageJSON){
     }
   });
 }
-
-app.intent('GaragePrediction', (conv) => {
-  // Choose one or more supported permissions to request:
-  // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
-  const options = {
-    context: 'To address you by name and know your location',
-    // Ask for more than one permission. User can authorize all or none.
-    permissions: ['DEVICE_PRECISE_LOCATION'],
-  };
-
-  conv.ask(new Permission(options));
-});
