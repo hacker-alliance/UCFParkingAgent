@@ -118,14 +118,14 @@ function intentSpotsLeft(req, res, garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-  if (flavorCounter > flavortextSpotsLeft.length)
-    flavorCounter = 0;
-  else
-    flavorCounter++;
+
 
   if (garageJSON[garages[garage_name]])
     responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
-
+    if (flavorCounter > flavortextSpotsLeft.length)
+      flavorCounter = 0;
+    else
+      flavorCounter++;
 
 
   return res.json({
@@ -141,13 +141,15 @@ function intentSpotsTotal(req,res,garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-  if (flavorCounter > flavortextSpotsTotal.length)
-    flavorCounter = 0;
-  else
-    flavorCounter++;
+
 
   if(garageJSON[garages[garage_name]])
     responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
+    if (flavorCounter > flavortextSpotsTotal.length)
+      flavorCounter = 0;
+    else
+      flavorCounter++;
+
   return res.json({
       "fulfillmentText": responseText,
       "payload": {
