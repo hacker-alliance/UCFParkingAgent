@@ -8,6 +8,15 @@ const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
 
+var garages = {
+  "A": 0,
+  "B": 1,
+  "C": 2,
+  "D": 3,
+  "H": 4,
+  "I": 5,
+  "Libra": 6
+}
 
 var garage_capacity = {
   "A": "1623",
