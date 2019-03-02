@@ -64,17 +64,19 @@ restService.post("/garage", function(req, res) {
   var garageAvail = [];
   scrape_garage().then(function(garageJSON){
     console.log(garageJSON);
+    var garage_name = req.body.queryResult.parameters.garage;
+
+      return res.json({
+        "fulfillmentText": garageJSON[garages[garage_name]] + "/" + garage_capacity[garage_name],
+        "payload": {
+          "google": {
+            "expectUserResponse": true
+          }
+        }
+      });
   })
 
 
-    return res.json({
-      "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name],
-      "payload": {
-        "google": {
-          "expectUserResponse": true
-        }
-      }
-    });
   });
 
 function scrape_garage(){
@@ -89,7 +91,7 @@ function scrape_garage(){
       		garageAvail[i] = $(this).text();
         });
         resolve(garageAvail);
-    	});
+    	}));
 
 
 
