@@ -52,17 +52,16 @@ restService.post("/echo", function(req, res) {
 restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
   var garageAvail = [];
-  rp(url)
-  .then(function(html){
-    //success!
-    $('strong', html).each(function(i, elem) {
+
+  request(url, (function (error, response, body) {
+  	const $ = $.load(body);
+  	//Garages Are Stored in Strong Elements
+  	//For Each Strong Element
+  	$('strong').each(function(i, elem) {
   		//Get Garage Load
   		garageAvail[i] = $(this).text();
-    });
-  })
-  .catch(function(err){
-    //handle error
-  });
+  	});
+  }));
 
   console.log(garageAvail);
   console.log(garageAvail[garages[req.body.queryResult.parameters.garage]])
