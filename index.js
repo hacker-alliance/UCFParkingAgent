@@ -51,11 +51,14 @@ restService.post("/echo", function(req, res) {
 
 restService.post("/garage", function(req, res) {
   console.log(req.body.queryResult.parameters.garage);
-  var garage_fill
+  var garageAvail = [];
   rp(url)
   .then(function(html){
     //success!
-    console.log($('strong', html)[0].text());
+    console.log($('strong', html).each(function(i, elem) {
+  		//Get Garage Load
+  		garageAvail[i] = parseInt($(this).text());
+    });
 
   })
   .catch(function(err){
@@ -63,7 +66,7 @@ restService.post("/garage", function(req, res) {
   });
 
   return res.json({
-    "fulfillmentText": req.body.queryResult.parameters.garage
+    "fulfillmentText": garageAvail[garage[req.body.queryResult.parameters.garage]];
   });
 });
 
