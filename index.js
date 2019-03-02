@@ -3,6 +3,8 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const rp = require('request-promise');
+const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
 
@@ -37,23 +39,19 @@ restService.post("/echo", function(req, res) {
 });
 
 restService.post("/garage", function(req, res) {
-  // var speech =
-  //   req.body.result &&
-  //   req.body.result.parameters &&
-  //   req.body.result.parameters.echoText
-  //     ? req.body.result.parameters.echoText
-  //     : "Seems like some problem. Speak again.";
-  console.log(req.body);
-  /*
-  var speech =
-    req &&
-    req.query &&
-    req.query.echoText
-    ? req.query.echoText
-    : "Seems like some problem. Speak again.";*/
+  console.log(req.body.queryResult.parameters.garage);
+
+  rp(url)
+  .then(function(html){
+    //success!
+    console.log(html);
+  })
+  .catch(function(err){
+    //handle error
+  });
 
   return res.json({
-    hello: "hello"
+    "fulfillmentText": req.body.queryResult.parameters.garage
   });
 });
 
