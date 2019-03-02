@@ -11,23 +11,23 @@ const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 const restService = express();
 
 var garages = {
-  "A": 0,
-  "B": 1,
-  "C": 2,
-  "D": 3,
-  "H": 4,
-  "I": 5,
-  "Libra": 6
+  "a": 0,
+  "b": 1,
+  "c": 2,
+  "d": 3,
+  "h": 4,
+  "i": 5,
+  "libra": 6
 }
 
 var garage_capacity = {
-  "A": "1623",
-  "B": "1259",
-  "C": "1852",
-  "D": "1241",
-  "H": "1284",
-  "I": "1231",
-  "Libra": "1007"
+  "a": "1623",
+  "b": "1259",
+  "c": "1852",
+  "d": "1241",
+  "h": "1284",
+  "i": "1231",
+  "libra": "1007"
 }
 
 restService.use(
@@ -73,7 +73,7 @@ restService.post("/garage", function(req, res) {
   		garageAvail[i] = $(this).text();
   	});
 
-    var garage_name = req.body.queryResult.parameters.garage;
+    var garage_name = req.body.queryResult.parameters.garage.toLowerCase();
 
     return res.json({
       "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name]
