@@ -68,8 +68,10 @@ restService.post("/garage", function(req, res) {
     //handle error
   });
 
+  var result = garageAvail[garages[req.body.queryResult.parameters.garage]];
+
   return res.json({
-    "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
+    "fulfillmentText": result
   });
 });
 
