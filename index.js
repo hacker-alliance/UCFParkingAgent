@@ -8,8 +8,6 @@ const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
 
-var flavorCounter = 0;
-
 var garages = {
   "A": 0,
   "B": 1,
@@ -30,24 +28,6 @@ var garage_capacity = {
   "Libra": "1007"
 }
 
-var flavortextSpotsLeft = {
-  0: function(garage, count) {
-    return (count < 50) ? "Only " + count.toString() + " spots left!" : "There's " + count.toString() + " spots left!";
-  },
-  1: function(garage, count) {
-    return "There's " + count.toString() + " parking spots";
-  },
-  2: function(garage, count) {
-    return count.toString() + " spots";
-  },
-  3: function(garage, count) {
-    return "Garage " + garage + " currently has " + count.toString() + " spots left";
-  },
-  4: function(string) {
-    return "There are " + count.toString() + " spots left in garage " + garage;
-  }
-}
-
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -60,26 +40,7 @@ restService.post("/garage", function(req, res) {
   var garageAvail = [];
 
   scrape_garage().then(function(garageJSON){
-    var garage_name = req.body.queryResult.parameters.garage;
-    console.log(req.body.queryResult.intent.displayName);
-    var responseText;
-
-    if (garageJSON[garages[garage_name]])
-      responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
-
-    if (flavorCounter >= 4)
-      flavorCounter = 0;
-    else
-      flavorCounter++;
-
-    return res.json({
-      "fulfillmentText": responseText,
-      "payload": {
-        "google": {
-          "expectUserResponse": true
-        }
-      }
-    });
+    return intents[req.body.queryResult.intent.displayName](req, res, garageJSON);
   })
 });
 
@@ -104,3 +65,58 @@ function scrape_garage(){
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
+
+
+
+
+
+
+var intents = {
+  "SpotsLeft": intentSpotsLeft
+}
+
+
+
+
+
+var flavorCounter = 0;
+
+var flavortextSpotsLeft = {
+  0: function(garage, count) {
+    return (count < 50) ? "Only " + count.toString() + " spots left!" : "There's " + count.toString() + " spots left!";
+  },
+  1: function(garage, count) {
+    return "There's " + count.toString() + " parking spots";
+  },
+  2: function(garage, count) {
+    return count.toString() + " spots";
+  },
+  3: function(garage, count) {
+    return "Garage " + garage + " currently has " + count.toString() + " spots left";
+  },
+  4: function(garage, count) {
+    return "There are " + count.toString() + " spots left in garage " + garage;
+  }
+}
+
+function intentSpotsLeft(req, res, garageJSON){
+  var garage_name = req.body.queryResult.parameters.garage;
+  var responseText;
+
+  if (garageJSON[garages[garage_name]])
+    responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
+
+  if (flavorCounter >= 4)
+    flavorCounter = 0;
+  else
+    flavorCounter++;
+
+  return res.json({
+    "fulfillmentText": responseText,
+    "payload": {
+      "google": {
+        "expectUserResponse": true
+      }
+    }
+  });
+}
