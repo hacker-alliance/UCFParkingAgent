@@ -5,7 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const rp = require('request-promise');
 const request = require('request');
-const $ = require('cheerio');
+const cheerio = require('cheerio');
 const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
@@ -55,7 +55,7 @@ restService.post("/garage", function(req, res) {
   var garageAvail = [];
 
   request(url, (function (error, response, body) {
-  	const $ = $.load(body);
+  	const $ = cheerio.load(body);
   	//Garages Are Stored in Strong Elements
   	//For Each Strong Element
   	$('strong').each(function(i, elem) {
