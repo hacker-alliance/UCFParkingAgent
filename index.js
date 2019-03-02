@@ -145,6 +145,7 @@ function intentSpotsTaken(req,res,garageJSON){
 
   if(garageJSON[garages[garage_name]])
     responseText = flavortextSpotsTaken[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
+    console.log(flavorCounter);
     if (flavorCounter < flavortextSpotsTaken.length)
       flavorCounter++;
     else
