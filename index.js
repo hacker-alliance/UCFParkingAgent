@@ -18,13 +18,13 @@ var garages = {
 }
 
 var garage_capacity = {
-  "A": "1623",
-  "B": "1259",
-  "C": "1852",
-  "D": "1241",
-  "H": "1284",
-  "I": "1231",
-  "Libra": "1007"
+  "A": 1623,
+  "B": 1259,
+  "C": 1852,
+  "D": 1241,
+  "H": 1284,
+  "I": 1231,
+  "Libra": 1007
 }
 
 restService.use(
@@ -46,11 +46,13 @@ restService.post("/garage", function(req, res) {
   })
 });
 
-
-
 restService.listen(process.env.PORT || 8000, function() {
   console.log("Server up and listening");
 });
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 
 
@@ -67,18 +69,6 @@ var intents = {
 
 
 
-var flavortextSpotsTaken = {
-  0: function(garage, count,total){
-    return "In "+garage +", there are "+ count+" cars parked out of "+total;
-  },
-  1: function(garage, count,total){
-    return "There are "+count +" cars out of " + total + " in garage " + garage;
-  },
-  2: function(garage,count,total){
-    return "Garage "+ garage +" is "+ parseInt((count/total)*100)+ "% full";
-  }
-
-}
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
@@ -97,20 +87,14 @@ var flavortextSpotsLeft = {
     return "There are " + count.toString() + " spots left in garage " + garage;
   }
 }
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-var flavorCounter1 = getRandomInt(5);
-var flavorCounter2 = getRandomInt(3);
+
 function intentSpotsLeft(req, res, garageJSON){
-  flavorCounter1 = getRandomInt(5);
+  var flavorCounter1 = getRandomInt(5);
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-
   if (garageJSON[garages[garage_name]])
     responseText = flavortextSpotsLeft[flavorCounter1](garage_name, parseInt(garageJSON[garages[garage_name]]));
-
 
   return res.json({
     "fulfillmentText": responseText,
@@ -121,22 +105,33 @@ function intentSpotsLeft(req, res, garageJSON){
     }
   });
 }
+
+var flavortextSpotsTaken = {
+  0: function(garage, count, total){
+    return "In " + garage + ", there are " + count.toString() + " cars parked out of " + total.toString();
+  },
+  1: function(garage, count, total){
+    return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage;
+  },
+  2: function(garage, count, total){
+    return "Garage " + garage + " is "+ ((count/total)*100).toString() + "% full";
+  }
+}
+
 function intentSpotsTaken(req,res,garageJSON){
-  flavorCounter2 = getRandomInt(3);
+  var flavorCounter2 = getRandomInt(3);
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-
   if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTaken[flavorCounter2](garage_name,garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]]),garage_capacity[garage_name])
-
+    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]]), garage_capacity[garage_name]);
 
   return res.json({
-      "fulfillmentText": responseText,
-      "payload": {
-        "google": {
-          "expectUserResponse": true
-        }
+    "fulfillmentText": responseText,
+    "payload": {
+      "google": {
+        "expectUserResponse": true
       }
-    });
+    }
+  });
 }
