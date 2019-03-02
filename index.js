@@ -75,8 +75,8 @@ restService.post("/garage", function(req, res) {
         }
       }
     });
-  }));
-});
+  });
+
 function scrape_garage(){
   var garageAvail = [];
   return new Promise((resolve,reject)=>{
