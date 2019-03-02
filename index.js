@@ -145,10 +145,10 @@ function intentSpotsTotal(req,res,garageJSON){
 
   if(garageJSON[garages[garage_name]])
     responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
-    if (flavorCounter >=flavortextSpotsTotal.length)
-      flavorCounter = 0;
+    if (flavorCounter < flavortextSpotsTotal.length)
+      fflavorCounter++;
     else
-      flavorCounter++;
+      flavorCounter = 0;
 
   return res.json({
       "fulfillmentText": responseText,
