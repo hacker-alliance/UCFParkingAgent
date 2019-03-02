@@ -16,9 +16,9 @@ const {
   Permission,
 } = require('actions-on-google');
 
-const app = dialogflow();
+const app = actionssdk({debug: true});
 
-app.intent('GaragePrediction', (conv) => {
+app.intent('actions.intent.PERMISSION', (conv) => {
   // Choose one or more supported permissions to request:
   // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
   const options = {
