@@ -8,15 +8,6 @@ const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
 
-var garages = {
-  "A": 0,
-  "B": 1,
-  "C": 2,
-  "D": 3,
-  "H": 4,
-  "I": 5,
-  "Libra": 6
-}
 
 var garage_capacity = {
   "A": "1623",
@@ -36,30 +27,7 @@ restService.use(
 
 restService.use(bodyParser.json());
 
-// restService.post("/garage", function(req, res) {
-//   var garageAvail = [];
-//
-//   return request(url, (function (error, response, body) {
-//   	const $ = cheerio.load(body);
-//
-//     // Parse and save garage parking spaces number
-//   	$('strong').each(function(i, elem) {
-//   		//Get Garage Load
-//   		garageAvail[i] = $(this).text();
-//   	});
-//
-//     var garage_name = req.body.queryResult.parameters.garage;
-//
-//     return res.json({
-//       "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name],
-//       "payload": {
-//         "google": {
-//           "expectUserResponse": true
-//         }
-//       }
-//     });
-//   }));
-// });
+
 restService.post("/garage", function(req, res) {
   var garageAvail = [];
   scrape_garage().then(function(garageJSON){
