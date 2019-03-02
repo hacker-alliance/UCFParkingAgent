@@ -21,13 +21,13 @@ var garages = {
 }
 
 var garage_capacity = {
-  "A": 1623,
-  "B": 1259,
-  "C": 1852,
-  "D": 1241,
-  "H": 1284,
-  "I": 1231,
-  "Libra": 1007
+  "A": "1623",
+  "B": "1259",
+  "C": "1852",
+  "D": "1241",
+  "H": "1284",
+  "I": "1231",
+  "Libra": "1007"
 }
 
 restService.use(
@@ -76,7 +76,7 @@ restService.post("/garage", function(req, res) {
     var garage_name = req.body.queryResult.parameters.garage;
 
     return res.json({
-      "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name];
+      "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name]
     });
   }));
 });
