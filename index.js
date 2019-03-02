@@ -148,4 +148,12 @@ function intentSpotsTotal(req,res,garageJSON){
 
   if(garageJSON[garages[garage_name]])
     responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name],garage_capacity[garage_name]))
+  return res.json({
+      "fulfillmentText": responseText,
+      "payload": {
+        "google": {
+          "expectUserResponse": true
+        }
+      }
+    });
 }
