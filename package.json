@@ -1,23 +1,14 @@
 {
-  "name": "dialogflowFirebaseFulfillment",
-  "description": "Dialogflow fulfillment for the bike shop sample",
-  "version": "0.0.1",
-  "private": true,
-  "license": "Apache Version 2.0",
-  "author": "Google Inc.",
-  "engines": {
-    "node": "6"
-  },
+  "name": "webhook-echo-sample",
+  "version": "1.0.0",
+  "description": "Webhook echo sample",
+  "main": "index.js",
   "scripts": {
-    "lint": "semistandard --fix \"**/*.js\"",
-    "start": "firebase deploy --only functions",
-    "deploy": "firebase deploy --only functions"
+    "start": "node index.js"
   },
+  "author": "Sunil Syal",
   "dependencies": {
-    "firebase-functions": "2.0.2",
-    "firebase-admin": "^5.13.1",
-    "actions-on-google": "2.2.0",
-    "googleapis": "^27.0.0",
-    "dialogflow-fulfillment": "0.5.0"
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
   }
 }
