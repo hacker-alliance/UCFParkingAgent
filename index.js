@@ -20,6 +20,16 @@ var garages = {
   "Libra": 6
 }
 
+var garage_capacity = (
+    "A": 1623,
+    "B": 1259,
+    "C": 1852,
+    "D": 1241,
+    "H": 1284,
+    "I": 1231,
+    "Libra": 1007
+)
+
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -63,14 +73,12 @@ restService.post("/garage", function(req, res) {
   		garageAvail[i] = $(this).text();
   	});
 
-    console.log(garageAvail);
-    console.log(garageAvail[garages[req.body.queryResult.parameters.garage]])
+    var garage_name = req.body.queryResult.parameters.garage;
+
     return res.json({
-      "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
+      "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name];
     });
   }));
-
-
 });
 
 restService.post("/audio", function(req, res) {
