@@ -84,7 +84,7 @@ var intents = {
 
 
 var flavorCounter = 0;
-var flavortextSpotsLeft = {
+var flavortextSpotsTotal = {
   0: function(garage, count,total){
     return "In "+garage +", there are "+ count+" cars parked out of "+total;
   },
