@@ -73,7 +73,7 @@ restService.post("/garage", function(req, res) {
   		garageAvail[i] = $(this).text();
   	});
 
-    var garage_name = req.body.queryResult.parameters.garage.toLowerCase();
+    var garage_name = req.body.queryResult.parameters.garage;
 
     return res.json({
       "fulfillmentText": garageAvail[garages[garage_name]] + "/" + garage_capacity[garage_name],
