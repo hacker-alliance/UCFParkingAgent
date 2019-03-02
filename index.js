@@ -122,7 +122,7 @@ function intentSpotsLeft(req, res, garageJSON){
 
   if (garageJSON[garages[garage_name]])
     responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
-    if (flavorCounter > flavortextSpotsLeft.length)
+    if (flavorCounter >= flavortextSpotsLeft.length)
       flavorCounter = 0;
     else
       flavorCounter++;
@@ -145,7 +145,7 @@ function intentSpotsTotal(req,res,garageJSON){
 
   if(garageJSON[garages[garage_name]])
     responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name]),garage_capacity[garage_name])
-    if (flavorCounter > flavortextSpotsTotal.length)
+    if (flavorCounter >=flavortextSpotsTotal.length)
       flavorCounter = 0;
     else
       flavorCounter++;
