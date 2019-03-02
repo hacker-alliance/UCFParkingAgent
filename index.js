@@ -54,7 +54,7 @@ restService.post("/garage", function(req, res) {
 
   return res.json({
     "payload": {
-      "google": {
+      req.body.originalDetectIntentRequest.source: {
         "expectUserResponse": false,
         "richResponse": {
           "items": [
