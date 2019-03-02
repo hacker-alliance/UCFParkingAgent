@@ -44,7 +44,7 @@ restService.post("/garage", function(req, res) {
   rp(url)
   .then(function(html){
     //success!
-    console.log(html);
+    console.log($('strong', html));
   })
   .catch(function(err){
     //handle error
