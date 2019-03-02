@@ -92,7 +92,7 @@ var flavortextSpotsLeft = {
     return "There are "+count +" cars out of " + total + " in garage " + garage;
   },
   2: function(garage,count,total){
-    return "Garage "+ garage +" is " parseInt((count/total)*100) "% full";
+    return "Garage "+ garage +" is "+ parseInt((count/total)*100)+ "% full";
   }
 
 }
