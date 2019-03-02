@@ -14,9 +14,8 @@ const cheerio = require('cheerio');
 //InfluxDB Library
 const Influx = require('influx');
 
-const dotenv = require('dotenv');
-
 //Environment Variable Import
+const dotenv = require('dotenv');
 dotenv.config({path:'/opt/www/scraper/.env'});
 
 //Influx Connection
