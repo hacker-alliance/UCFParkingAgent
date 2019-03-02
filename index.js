@@ -72,7 +72,8 @@ restService.listen(process.env.PORT || 8000, function() {
 
 
 var intents = {
-  "SpotsLeft": intentSpotsLeft
+  "SpotsLeft": intentSpotsLeft,
+  "SpotsTotal": intentSpotsTotal
 }
 
 
@@ -80,7 +81,18 @@ var intents = {
 
 
 var flavorCounter = 0;
+var flavortextSpotsLeft = {
+  0: function(garage, count,total){
+    return "In "+garage +", there are "+ count+" cars parked out of "+total;
+  },
+  1: function(garage, count,total){
+    return "There are "+count +" cars out of " + total + " in garage " + garage;
+  },
+  2: function(garage,count,total){
+    return "Garage "+ garage +" is " parseInt((count/total)*100) "% full";
+  }
 
+}
 var flavortextSpotsLeft = {
   0: function(garage, count) {
     return (count < 50) ? "Only " + count.toString() + " spots left!" : "There's " + count.toString() + " spots left!";
@@ -103,13 +115,15 @@ function intentSpotsLeft(req, res, garageJSON){
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
 
-  if (garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
-
-  if (flavorCounter >= 4)
+  if (flavorCounter >= flavortextSpotsLeft.length)
     flavorCounter = 0;
   else
     flavorCounter++;
+
+  if (garageJSON[garages[garage_name]])
+    responseText = flavortextSpotsLeft[flavorCounter](garage_name, parseInt(garageJSON[garages[garage_name]]));
+
+
 
   return res.json({
     "fulfillmentText": responseText,
@@ -119,4 +133,16 @@ function intentSpotsLeft(req, res, garageJSON){
       }
     }
   });
+}
+function intentSpotsTotal(req,res,garageJSON){
+  var garage_name = req.body.queryResult.parameters.garage;
+  var responseText;
+
+  if (flavorCounter >= flavortextSpotsTotal.length)
+    flavorCounter = 0;
+  else
+    flavorCounter++;
+
+  if(garageJSON[garages[garage_name]])
+    responseText = flavortextSpotsTotal[flavorCounter](garage_name,parseInt(garages[garage_name],garage_capacity[garage_name]))
 }
