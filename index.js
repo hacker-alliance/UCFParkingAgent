@@ -28,11 +28,32 @@ restService.post("/echo", function(req, res) {
     req.query.echoText
     ? req.query.echoText
     : "Seems like some problem. Speak again.";
-    
+
   return res.json({
     speech: speech,
     displayText: speech,
     source: "webhook-echo-sample"
+  });
+});
+
+restService.post("/garage", function(req, res) {
+  // var speech =
+  //   req.body.result &&
+  //   req.body.result.parameters &&
+  //   req.body.result.parameters.echoText
+  //     ? req.body.result.parameters.echoText
+  //     : "Seems like some problem. Speak again.";
+  console.log(req.body);
+  /*
+  var speech =
+    req &&
+    req.query &&
+    req.query.echoText
+    ? req.query.echoText
+    : "Seems like some problem. Speak again.";*/
+
+  return res.json({
+    hello: "hello"
   });
 });
 
