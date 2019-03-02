@@ -73,8 +73,7 @@ function getRandomInt(max) {
 
 var intents = {
   "SpotsLeft": intentSpotsLeft,
-  "SpotsTaken": intentSpotsTaken,
-  "GaragePrediction": intentGaragePrediction
+  "SpotsTaken": intentSpotsTaken
 }
 
 
