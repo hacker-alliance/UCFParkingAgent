@@ -61,13 +61,15 @@ restService.post("/garage", function(req, res) {
     });
 
     console.log(garageAvail);
+    console.log(garages[req.body.queryResult.parameters.garage]);
+
   })
   .catch(function(err){
     //handle error
   });
 
   return res.json({
-    "fulfillmentText": "" + garageAvail[garages[req.body.queryResult.parameters.garage]] + ""
+    "fulfillmentText": garageAvail[garages[req.body.queryResult.parameters.garage]]
   });
 });
 
