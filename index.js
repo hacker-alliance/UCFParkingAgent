@@ -43,7 +43,7 @@ restService.post("/garage", function(req, res) {
   //   req.body.result.parameters.echoText
   //     ? req.body.result.parameters.echoText
   //     : "Seems like some problem. Speak again.";
-  console.log(req.body.test);
+  console.log(req.body);
   /*
   var speech =
     req &&
@@ -53,7 +53,7 @@ restService.post("/garage", function(req, res) {
     : "Seems like some problem. Speak again.";*/
 
   return res.json({
-    hello: req.body.test
+    hello: "testfkasjd"
   });
 });
 
