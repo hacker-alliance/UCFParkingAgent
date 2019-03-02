@@ -57,11 +57,10 @@ restService.post("/garage", function(req, res) {
     //success!
     $('strong', html).each(function(i, elem) {
   		//Get Garage Load
-  		garageAvail[i] = parseInt($(this).text());
+  		garageAvail[i] = $(this).text();
     });
 
     console.log(garageAvail);
-
   })
   .catch(function(err){
     //handle error
