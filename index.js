@@ -4,6 +4,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const rp = require('request-promise');
+const $ = require('cheerio');
 const url = 'http://secure.parking.ucf.edu/GarageCount/iframe.aspx';
 
 const restService = express();
