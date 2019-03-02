@@ -55,7 +55,7 @@ restService.post("/garage", function(req, res) {
   rp(url)
   .then(function(html){
     //success!
-    console.log($('strong', html).text());
+    console.log($('strong', html)[0].text());
 
   })
   .catch(function(err){
