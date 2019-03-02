@@ -20,15 +20,15 @@ var garages = {
   "Libra": 6
 }
 
-var garage_capacity = (
-    "A": 1623,
-    "B": 1259,
-    "C": 1852,
-    "D": 1241,
-    "H": 1284,
-    "I": 1231,
-    "Libra": 1007
-)
+var garage_capacity = {
+  "A": 1623,
+  "B": 1259,
+  "C": 1852,
+  "D": 1241,
+  "H": 1284,
+  "I": 1231,
+  "Libra": 1007
+}
 
 restService.use(
   bodyParser.urlencoded({
