@@ -55,10 +55,12 @@ restService.post("/garage", function(req, res) {
   rp(url)
   .then(function(html){
     //success!
-    console.log($('strong', html).each(function(i, elem) {
+    $('strong', html).each(function(i, elem) {
   		//Get Garage Load
   		garageAvail[i] = parseInt($(this).text());
-    }));
+    });
+
+    console.log(garageAvail);
 
   })
   .catch(function(err){
