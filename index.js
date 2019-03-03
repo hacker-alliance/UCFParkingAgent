@@ -207,6 +207,11 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
+              "simpleResponse": {
+                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
+              }
+            },
+            {
               "tableCard": {
                 "title": "test",
                 "columnProperties": [
