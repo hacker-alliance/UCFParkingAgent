@@ -159,7 +159,7 @@ var flavortextSpotsTaken = {
     return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage;
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is " + Math.min(100, Math.max(0, (count/total)*100)).toString() + "% full";
+    return "Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full";
   }
 }
 
