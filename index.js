@@ -40,6 +40,8 @@ restService.use(bodyParser.json());
 restService.post("/garage", function(req, res) {
   var intent = intents[req.body.queryResult.intent.displayName];
 
+  console.log("Running intent: " + intent);
+
   if(intent != intentGaragePredict){
     scrape_garage().then(function(garageJSON){
         if (intent)
@@ -48,13 +50,10 @@ restService.post("/garage", function(req, res) {
         return res.json({});
     });
   }else{
-    // console.log(req.body.queryResult.parameters.time)
     if(req.body.queryResult.parameters.timeuntil){
       var date = new Date(req.body.queryResult.parameters.timeuntil);
-      console.log(days[date.getDay()],date.getHours(),date.getMinutes());
 
       predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
-        // console.log(garageJSON);
         if(intent)
           return intent(req,res,garageJSON);
 
@@ -341,61 +340,56 @@ var flavortextGaragePredict = {
     return "Garage " + name + " will have " + number + " out of " + max + " open spots in " + minute + " minutes!";
   },
   3: function(name,max,number,minute){
-    return "Garage " + name + " is predicted to have a " + Math.ceil(((number/max)*100)) + " percent chance of open spots in " + minute + " minutes!";
+    return "Garage " + name + " is predicted to have a " + Math.round(((number/max)*100)) + " percent chance of open spots in " + minute + " minutes!";
   }
 }
 
-function intentGaragePredict(req,res,garageJSON){
- var garage_name = req.body.queryResult.parameters.garage;
- var time = new Date();
- var delaytime = new Date(req.body.queryResult.parameters.timeuntil);
- console.log(Math.abs(time.getTime()-delaytime.getTime()))
- var second = Math.abs(time.getTime()-delaytime.getTime())/1000;
- var minute = Math.ceil(second/60);
+function intentGaragePredict(req, res, garageJSON){
+  var garage_name = req.body.queryResult.parameters.garage;
+  var time = new Date();
+  var delaytime = new Date(req.body.queryResult.parameters.timeuntil);
+  var second = Math.abs(time.getTime()-delaytime.getTime())/1000;
+  var minute = Math.ceil(second/60);
 
- var responseText;
- var flavorCounter3 = getRandomInt(4);
+  var responseText;
+  var flavorCounter3 = getRandomInt(4);
 
- if(garage_name != "Libra"){
-   garage_name = garage_name.charAt(0).toUpperCase();
- }
+  if(garage_name != "Libra"){
+    garage_name = garage_name.charAt(0).toUpperCase();
+  }
 
- console.log(garageJSON);
+  if(garageJSON[garage_name])
+    responseText = flavortextGaragePredict[flavorCounter3](garage_name, garage_capacity[garage_name], garageJSON[garage_name], minute);
 
- if(garageJSON[garage_name])
-  responseText = flavortextGaragePredict[flavorCounter3](garage_name, garage_capacity[garage_name], garageJSON[garage_name], minute);
-
- console.log(responseText);
-
- return res.json({
-   "payload": {
-     "google": {
-       "expectUserResponse": true,
-       "richResponse": {
-         "items": [
-           {
-             "simpleResponse": {
-               "textToSpeech": responseText
-             }
-           }
-         ],
-         "suggestions": [
-           {
-             "title": "help me"
-           },
-           {
-             "title": "garage B?"
-           },
-           {
-             "title": "garage status"
-           }
-         ],
-         "linkOutSuggestion": {
-           "destinationName": "Github",
-           "url": "https://github.com/UCFParking/UCFParkingAgent"
-         }
-       }
-     }
-   }
- });
+  return res.json({
+    "payload": {
+      "google": {
+        "expectUserResponse": true,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": responseText
+              }
+            }
+          ],
+          "suggestions": [
+          {
+            "title": "help me"
+          },
+          {
+            "title": "garage B?"
+          },
+          {
+            "title": "garage status"
+          }
+          ],
+          "linkOutSuggestion": {
+            "destinationName": "Github",
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
+          }
+        }
+      }
+    }
+  });
 }
