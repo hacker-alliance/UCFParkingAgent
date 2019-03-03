@@ -217,7 +217,7 @@ function intentTemp(req, res, garageJSON){
 
                     // Union field image can be only one of the following:
                     "largeImage": {
-                      "url": "https://c402277.ssl.cf1.rackcdn.com/photos/2330/images/hero_small/polar-bear-hero.jpg",
+                      "url": "https://i.imgur.com/2Hev5Is.jpg",
                       "accessibilityText": "test"
                     }
                   }
