@@ -161,8 +161,33 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
-              "simpleResponse": {
-                "textToSpeech": "This is a browse carousel example."
+              "carouselBrowse": {
+                "items": [
+                  {
+                    "title": "Title of item 1",
+                    "openUrlAction": {
+                      "url": "google.com"
+                    },
+                    "description": "Description of item 1",
+                    "footer": "Item 1 footer",
+                    "image": {
+                      "url": "IMG_URL.com",
+                      "accessibilityText": "Image alternate text"
+                    }
+                  },
+                  {
+                    "title": "Google Assistant",
+                    "openUrlAction": {
+                      "url": "google.com"
+                    },
+                    "description": "Google Assistant on Android and iOS",
+                    "footer": "More information about the Google Assistant",
+                    "image": {
+                      "url": "IMG_URL_Assistant.com",
+                      "accessibilityText": "Image alternate text"
+                    }
+                  }
+                ]
               }
             }
           ]
@@ -171,7 +196,6 @@ function intentTemp(req, res, garageJSON){
     }
   });
 }
-
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
     return minute +" minutes from now, garage "+ name +" has "+number +" out of "+max+" available spots!";
