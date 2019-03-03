@@ -54,8 +54,6 @@ app.get('/garages', function (req, res) {
 
 //Basic Seasonal Prediction
 app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
-	//Debug
-	//console.log(req.params)
 	garageDB.query(`
 		SELECT * FROM load
 		WHERE weekday=${Influx.escape.stringLit(req.params.weekday)}
@@ -69,6 +67,22 @@ app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
 		res.status(500).send(err.stack)
 	})
 });
+
+//Seasonal Prediction Using Holt Winters - In Progress
+app.get('/predictionHW/:weekday/:hour/:minute', function (req, res) {
+	garageDB.query(`
+		SELECT * FROM load
+		WHERE weekday=${Influx.escape.stringLit(req.params.weekday)}
+		AND hour=${Influx.escape.stringLit(req.params.hour)}
+		AND minute=${Influx.escape.stringLit(req.params.minute)}
+		ORDER BY time DESC
+		LIMIT 7
+	`).then(result => {
+		res.json(result)
+	}).catch(err => {
+		res.status(500).send(err.stack)
+	})
+}
 
 //Listen on Port
 app.listen(8080, () => {
