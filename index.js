@@ -112,10 +112,33 @@ function intentSpotsLeft(req, res, garageJSON){
     responseText = flavortextSpotsLeft[flavorCounter1](garage_name, parseInt(garageJSON[garages[garage_name]]));
 
   return res.json({
-    "fulfillmentText": responseText,
     "payload": {
       "google": {
-        "expectUserResponse": true
+        "expectUserResponse": true,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": responseText
+              }
+            }
+          ],
+          "suggestions": [
+            {
+              "title": "help me"
+            },
+            {
+              "title": "garage B?"
+            },
+            {
+              "title": "garage A in 20 minutes"
+            }
+          ],
+          "linkOutSuggestion": {
+            "destinationName": "Github",
+            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+          }
+        }
       }
     }
   });
@@ -142,13 +165,36 @@ function intentSpotsTaken(req,res,garageJSON){
     responseText = flavortextSpotsTaken[flavorCounter2](garage_name, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]]), garage_capacity[garage_name]);
 
   return res.json({
-    "fulfillmentText": responseText,
     "payload": {
       "google": {
-        "expectUserResponse": true
+        "expectUserResponse": true,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": responseText
+              }
+            }
+          ],
+          "suggestions": [
+            {
+              "title": "help me"
+            },
+            {
+              "title": "garage B?"
+            },
+            {
+              "title": "garage A in 20 minutes"
+            }
+          ],
+          "linkOutSuggestion": {
+            "destinationName": "Github",
+            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+          }
+        }
       }
     }
-})
+  });
 }
 
 function intentTemp(req, res, garageJSON){
@@ -162,24 +208,24 @@ function intentTemp(req, res, garageJSON){
           "items": [
             {
               "simpleResponse": {
-                "textToSpeech": "These are suggestion chips."
+                "textToSpeech": responseText
               }
             }
           ],
           "suggestions": [
             {
-              "title": "Suggestion Chips"
+              "title": "help me"
             },
             {
-              "title": "suggestion 1"
+              "title": "garage B?"
             },
             {
-              "title": "suggestion 2"
+              "title": "garage A in 20 minutes"
             }
           ],
           "linkOutSuggestion": {
-            "destinationName": "Suggestion Link",
-            "url": "https://assistant.google.com/"
+            "destinationName": "Github",
+            "url": "https://github.com/parking-assist/UCFParkingAssistant"
           }
         }
       }
@@ -217,11 +263,35 @@ function intentGaragePredict(req,res,garageJSON){
  if(garageJSON[garage_name])
   responseText = flavortextGaragePredict[flavorCounter3](garage_name,garage_capacity[garage_name],garageJSON[garage_name],minute);
  console.log(responseText);
- return res.json({"fulfillmentText":responseText,
-   "payload":{
-     "google":{
-       "expectUserResponse":true
+ return res.json({
+   "payload": {
+     "google": {
+       "expectUserResponse": true,
+       "richResponse": {
+         "items": [
+           {
+             "simpleResponse": {
+               "textToSpeech": responseText
+             }
+           }
+         ],
+         "suggestions": [
+           {
+             "title": "help me"
+           },
+           {
+             "title": "garage B?"
+           },
+           {
+             "title": "garage A in 20 minutes"
+           }
+         ],
+         "linkOutSuggestion": {
+           "destinationName": "Github",
+           "url": "https://github.com/parking-assist/UCFParkingAssistant"
+         }
+       }
      }
    }
- })
+ });
 }
