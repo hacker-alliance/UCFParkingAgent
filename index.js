@@ -26,7 +26,7 @@ var garage_capacity = {
   "I": 1231,
   "Libra": 1007
 }
-
+days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 restService.use(
   bodyParser.urlencoded({
     extended: true
