@@ -53,7 +53,7 @@ restService.post("/garage", function(req, res) {
     if(req.body.queryResult.parameters.timeuntil){
       var date = new Date(req.body.queryResult.parameters.timeuntil);
 
-      predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
+      predict_garage("Monday",date.getHours(),date.getMinutes()).then(function(garageJSON){
         if(intent)
           return intent(req,res,garageJSON);
 
