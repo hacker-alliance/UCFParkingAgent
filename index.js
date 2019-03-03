@@ -161,8 +161,10 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
-              "simpleResponse": {
-                "textToSpeech": "This is a browse carousel example."
+              "basicCard": {
+                "title": "ddfasdfds",
+                "subtitle": "dsafdfafdsf",
+                "formattedText": "dfdafdsfa"
               }
             }
           ]
