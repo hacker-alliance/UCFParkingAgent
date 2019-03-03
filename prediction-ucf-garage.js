@@ -2,8 +2,9 @@ const request = require("request");
 
 module.exports = function(day,hour,min){
   //This is where Terrell's Collected Data and prediction lives
-  const base_link = "https://www.3pointlabs.org/prediction/";
+    const base_link = "https://www.3pointlabs.org/prediction/";
   return new Promise((resolve,reject)=>{
+    console.log(hour, min);
     //If the inputs are Not a number then reject the promise.
     if(isNaN(hour) || isNaN(min)){
         reject(404, {error: "One of the input is not a number"});
