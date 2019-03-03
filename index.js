@@ -82,8 +82,7 @@ var intents = {
   "SpotsLeft": intentSpotsLeft,
   "SpotsTaken": intentSpotsTaken,
   "Garage Prediction Intent": intentGaragePredict,
-  "GarageStatus": intentGarageStatus,
-  "Temp": intentTemp
+  "GarageStatus": intentGarageStatus
 }
 
 
@@ -305,60 +304,6 @@ function intentGarageStatus(req, res, garage)
                       }
                     ],
                     "dividerAfter": true
-                  }
-                ]
-              }
-            }
-          ],
-          "suggestions": [
-            {
-              "title": "help me"
-            },
-            {
-              "title": "garage B?"
-            },
-            {
-              "title": "garage A in 20 minutes"
-            }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/UCFParking/UCFParkingAgent"
-          }
-        }
-      }
-    }
-  });
-}
-
-function intentTemp(req, res, garageJSON){
-  console.log("testestestestes");
-
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
-              }
-            },
-            {
-              "mediaResponse": {
-                "mediaType": "MEDIA_TYPE_UNSPECIFIED",
-                "mediaObjects": [
-                  {
-                    "name": "CHICK FIL A",
-                    "description": "CHICHIFDSFHJD",
-                    "contentUrl": "https://i.imgur.com/S9jjqRr.jpg",
-
-                    // Union field image can be only one of the following:
-                    "largeImage": {
-                      "url": "https://i.imgur.com/S9jjqRr.jpg",
-                      "accessibilityText": "CHICK FIL A",
-                    }
                   }
                 ]
               }
