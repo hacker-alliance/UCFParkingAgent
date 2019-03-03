@@ -143,7 +143,7 @@ function intentSpotsLeft(req, res, garageJSON){
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -159,7 +159,7 @@ var flavortextSpotsTaken = {
     return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage;
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is " + ((count/total)*100).toString() + "% full";
+    return "Garage " + garage + " is " + Math.min(100, Math.max(0, (count/total)*100)).toString() + "% full";
   }
 }
 
@@ -169,7 +169,7 @@ function intentSpotsTaken(req, res, garageJSON){
   var responseText;
 
   if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]]), garage_capacity[garage_name]);
+    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, Math.max(0, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]])), garage_capacity[garage_name]);
 
   return res.json({
     "payload": {
@@ -196,7 +196,7 @@ function intentSpotsTaken(req, res, garageJSON){
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -323,7 +323,7 @@ function intentGarageStatus(req, res, garage)
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -377,7 +377,7 @@ function intentTemp(req, res, garageJSON){
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -447,7 +447,7 @@ function intentGaragePredict(req,res,garageJSON){
          ],
          "linkOutSuggestion": {
            "destinationName": "Github",
-           "url": "https://github.com/parking-assist/UCFParkingAssistant"
+           "url": "https://github.com/UCFParking/UCFParkingAgent"
          }
        }
      }
