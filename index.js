@@ -236,9 +236,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[0] + "/" + garage_capacity["A"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -247,9 +247,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[1] + "/" + garage_capacity["B"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -258,9 +258,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[2] + "/" + garage_capacity["C"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -269,9 +269,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[3] + "/" + garage_capacity["D"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -280,9 +280,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[4] + "/" + garage_capacity["H"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -291,9 +291,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[5] + "/" + garage_capacity["I"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   },
                   {
                     "cells": [
@@ -302,9 +302,9 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[6] + "/" + garage_capacity["Libra"]
-                      },
-                      "dividerAfter": true
-                    ]
+                      }
+                    ],
+                    "dividerAfter": true
                   }
                 ]
               }
