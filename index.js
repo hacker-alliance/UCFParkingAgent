@@ -141,7 +141,6 @@ function intentTemp(req, res, garageJSON){
   console.log("testestestestes");
 
   return res.json({
-    "fulfillmentText": "HIIHHIIII",
     "payload": {
       "google": {
         "expectUserResponse": true,
