@@ -7,33 +7,6 @@ const predict_garage = require("./prediction-ucf-garage");
 
 const restService = express();
 
-const {
-  dialogflow,
-  actionssdk,
-  Image,
-  Table,
-  Carousel,
-  Permission,
-} = require('actions-on-google');
-
-const app = actionssdk({debug: true});
-
-app.intent('actions.intent.PERMISSION', (conv) => {
-  // Choose one or more supported permissions to request:
-  // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
-  const options = {
-    context: 'To address you by name and know your location',
-    // Ask for more than one permission. User can authorize all or none.
-    permissions: ['DEVICE_PRECISE_LOCATION'],
-  };
-
-  console.log("test");
-
-  conv.ask(new Permission(options));
-});
-
-exports.echo = functions.https.onRequest(app);
-
 var garages = {
   "A": 0,
   "B": 1,
