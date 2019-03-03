@@ -40,7 +40,7 @@ restService.use(bodyParser.json());
 restService.post("/garage", function(req, res) {
   var intent = intents[req.body.queryResult.intent.displayName];
 
-  console.log("Running intent: " + intent);
+  console.log("Running intent: " + req.body.queryResult.intent.displayName);
 
   if(intent != intentGaragePredict){
     scrape_garage().then(function(garageJSON){
