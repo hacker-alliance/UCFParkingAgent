@@ -218,7 +218,11 @@ function intentTemp(req, res, garageJSON){
             },
             {
               "basicCard": {
-                "formattedText": "hello how are you"
+                "formattedText": "hello how are you",
+                "image": {
+                  "url": "https://i.imgur.com/S9jjqRr.jpg",
+                  "accessibilityText": "CHICK FIL A",
+                }
               }
             }
           ],
