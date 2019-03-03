@@ -212,22 +212,37 @@ function intentTemp(req, res, garageJSON){
               }
             },
             {
-              "tableCard": {
-                "title": "test",
-                "columnProperties": [
+              "carouselResponse": {
+                "items": [
                   {
-                    "header": "test",
-                    "horizontalAlignment": "CENTER"
-                  }
-                ],
-                "rows": [
+                    "title": "yes",
+                    "openUrlAction": {
+                      "url": "google.com",
+                      "androidApp": {
+                        "packageName": "com.android.chrome",
+                        "versions": [
+                          {
+                            "minVersion": 0
+                          }
+                        ]
+                      },
+                      "urlTypeHint": "URL_TYPE_HINT_UNSPECIFIED"
+                    }
+                  },
                   {
-                    "cells": [
-                      {
-                        "text": "cell"
-                      }
-                    ],
-                    "dividerAfter": true
+                    "title": "yes2",
+                    "openUrlAction": {
+                      "url": "duckduckgo.com",
+                      "androidApp": {
+                        "packageName": "com.android.chrome",
+                        "versions": [
+                          {
+                            "minVersion": 0
+                          }
+                        ]
+                      },
+                      "urlTypeHint": "URL_TYPE_HINT_UNSPECIFIED"
+                    }
                   }
                 ]
               }
