@@ -275,7 +275,7 @@ var flavortextGaragePredict = {
 function intentGaragePredict(req,res,garageJSON){
  var garage_name = req.body.queryResult.parameters.garage;
  var time = new Date();
- var delaytime = new Date(req.body.queryResult.parameters.time);
+ var delaytime = new Date(req.body.queryResult.parameters.timeuntil);
  console.log(Math.abs(time.getTime()-delaytime.getTime()))
  var second = Math.abs(time.getTime()-delaytime.getTime())/1000;
  var minute = Math.ceil(second/60);
