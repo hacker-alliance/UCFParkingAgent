@@ -36,14 +36,28 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/garage", function(req, res) {
-  scrape_garage().then(function(garageJSON){
-    var intent = intents[req.body.queryResult.intent.displayName];
+  var intent = intents[req.body.queryResult.intent.displayName];
 
-    if (intent)
-      return intent(req, res, garageJSON);
+  if(intent != intentGaragePredict){
+    scrape_garage().then(function(garageJSON){
+        if (intent)
+          return intent(req, res, garageJSON);
+        return res.json({});
+    });
+  }else{
+    // console.log(req.body.queryResult.parameters.time)
+    var date = new Date(req.body.queryResult.parameters.time);
 
-    return res.json({});
-  })
+    predict_garage(days[date.getDay()],date.getHours(),date.getDay()).then(function(garageJSON){
+      // console.log(garageJSON);
+      if(intent)
+        return intent(req,res,garageJSON);
+      return res.json({});
+    })
+    // console.log(days[date.getDay()] + "   " + date.getHours());
+
+
+  }
 });
 
 restService.listen(process.env.PORT || 8000, function() {
@@ -58,11 +72,11 @@ function getRandomInt(max) {
 
 
 
-
-var intents = {
-  "SpotsLeft": intentSpotsLeft,
-  "SpotsTaken": intentSpotsTaken,
-  "Temp": intentTemp
+var intents={
+"SpotsLeft": intentSpotsLeft,
+"SpotsTaken": intentSpotsTaken,
+"GaragePrediction": intentGaragePredict,
+"Temp":intentTemp
 }
 
 
@@ -134,7 +148,7 @@ function intentSpotsTaken(req,res,garageJSON){
         "expectUserResponse": true
       }
     }
-  });
+})
 }
 
 function intentTemp(req, res, garageJSON){
@@ -142,6 +156,7 @@ function intentTemp(req, res, garageJSON){
 
   return res.json({
     "payload": {
+    },
       "google": {
         "expectUserResponse": true,
         "richResponse": {
@@ -184,6 +199,46 @@ function intentTemp(req, res, garageJSON){
           ]
         }
       }
-    }
+
   });
+}
+
+var flavortextGaragePredict = {
+  0: function(name,max,number,minute){
+    return minute +" minutes from now, garage "+ name +" has "+number +" out of "+max+" available spots!";
+  },
+  1: function(name,max,number,minute){
+    return "Garage "+ name +" in " + minute + " minutes, has "+number+" out of "+max+" open parking";
+  },
+  2: function(name,max,number,minute){
+    return "Garage " + name +" will have " + number +" out of " + max + " open spots in " + minute + " minutes!";
+  },
+  3: function(name,max,number,minute){
+    return "Garage " + name +" is predicted to have a " + Math.ceil(((number/max)*100)) +" percent chance of open spots in " + minute + " minutes!";
+  }
+}
+function intentGaragePredict(req,res,garageJSON){
+ var garage_name = req.body.queryResult.parameters.garage;
+ var time = new Date();
+ var delaytime = new Date(req.body.queryResult.parameters.time);
+ console.log(Math.abs(time.getTime()-delaytime.getTime()))
+ var second = Math.abs(time.getTime()-delaytime.getTime())/1000;
+ var minute = Math.ceil(second/60);
+
+ var responseText;
+ var flavorCounter3 = getRandomInt(4);
+ if(garage_name!="Libra"){
+   garage_name = garage_name.charAt(0).toUpperCase();
+ }
+ console.log(garageJSON);
+ if(garageJSON[garage_name])
+  responseText = flavortextGaragePredict[flavorCounter3](garage_name,garage_capacity[garage_name],garageJSON[garage_name],minute);
+ console.log(responseText);
+ return res.json({"fulfillmentText":responseText,
+   "payload":{
+     "google":{
+       "expectUserResponse":true
+     }
+   }
+ })
 }
