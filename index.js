@@ -208,7 +208,7 @@ function intentTemp(req, res, garageJSON){
           "items": [
             {
               "MediaResponse": {
-                "mediaType": MEDIA_TYPE_UNSPECIFIED,
+                "mediaType": "MEDIA_TYPE_UNSPECIFIED",
                 "mediaObjects": [
                   {
                     "name": "polar bearo",
