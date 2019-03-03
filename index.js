@@ -61,7 +61,8 @@ function getRandomInt(max) {
 
 var intents = {
   "SpotsLeft": intentSpotsLeft,
-  "SpotsTaken": intentSpotsTaken
+  "SpotsTaken": intentSpotsTaken,
+  "Temp": intentTemp
 }
 
 
@@ -131,6 +132,55 @@ function intentSpotsTaken(req,res,garageJSON){
     "payload": {
       "google": {
         "expectUserResponse": true
+      }
+    }
+  });
+}
+
+function intentTemp(req, res, garageJSON){
+  return res.json({
+    "payload": {
+      "google": {
+        "expectUserResponse": true,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": "This is a browse carousel example."
+              }
+            },
+            {
+              "carouselBrowse": {
+                "items": [
+                  {
+                    "title": "Title of item 1",
+                    "openUrlAction": {
+                      "url": "google.com"
+                    },
+                    "description": "Description of item 1",
+                    "footer": "Item 1 footer",
+                    "image": {
+                      "url": "IMG_URL.com",
+                      "accessibilityText": "Image alternate text"
+                    }
+                  },
+                  {
+                    "title": "Google Assistant",
+                    "openUrlAction": {
+                      "url": "google.com"
+                    },
+                    "description": "Google Assistant on Android and iOS",
+                    "footer": "More information about the Google Assistant",
+                    "image": {
+                      "url": "IMG_URL_Assistant.com",
+                      "accessibilityText": "Image alternate text"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   });
