@@ -162,7 +162,7 @@ function intentTemp(req, res, garageJSON){
                     "description": "Description of item 1",
                     "footer": "Item 1 footer",
                     "image": {
-                      "url": "google.com",
+                      "url": "IMG_URL.com",
                       "accessibilityText": "Image alternate text"
                     }
                   },
@@ -174,7 +174,7 @@ function intentTemp(req, res, garageJSON){
                     "description": "Google Assistant on Android and iOS",
                     "footer": "More information about the Google Assistant",
                     "image": {
-                      "url": "google.com",
+                      "url": "IMG_URL_Assistant.com",
                       "accessibilityText": "Image alternate text"
                     }
                   }
