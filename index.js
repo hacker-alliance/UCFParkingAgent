@@ -217,22 +217,45 @@ function intentTemp(req, res, garageJSON){
               }
             },
             {
-              "tableCard": {
-                "title": "test",
-                "columnProperties": [
+              "carouselBrowse": {
+                "items": [
                   {
-                    "header": "test",
-                    "horizontalAlignment": "CENTER"
-                  }
-                ],
-                "rows": [
+                    "title": "yes",
+                    "image": {
+                      "url": "https://i.imgur.com/xLN8nnt.jpg",
+                      "accessibilityText": "testsdfsdfd"
+                    },
+                    "openUrlAction": {
+                      "url": "google.com",
+                      "androidApp": {
+                        "packageName": "com.android.chrome",
+                        "versions": [
+                          {
+                            "minVersion": 0
+                          }
+                        ]
+                      },
+                      "urlTypeHint": "URL_TYPE_HINT_UNSPECIFIED"
+                    }
+                  },
                   {
-                    "cells": [
-                      {
-                        "text": "cell"
-                      }
-                    ],
-                    "dividerAfter": true
+                    "title": "yes2",
+                    "image": {
+                      "url": "https://i.imgur.com/xLN8nnt.jpg",
+                      "accessibilityText": "testsdfsdfd"
+                    },
+                    "openUrlAction": {
+                      "url": "duckduckgo.com",
+                      "androidApp": {
+                        "packageName": "com.android.chrome",
+                        "versions": [
+                          {
+                            "minVersion": 0
+                          }
+                        ]
+                      },
+                      "urlTypeHint": "URL_TYPE_HINT_UNSPECIFIED"
+                    }
                   }
                 ]
               }
