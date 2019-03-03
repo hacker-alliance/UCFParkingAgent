@@ -207,19 +207,22 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
-              "MediaResponse": {
-                "mediaType": "MEDIA_TYPE_UNSPECIFIED",
-                "mediaObjects": [
+              "tableCard": {
+                "title": "test",
+                "columnProperties": [
                   {
-                    "name": "polar bearo",
-                    "description": "white thing",
-                    "contentUrl": "https://en.wikipedia.org/wiki/Polar_bear",
-
-                    // Union field image can be only one of the following:
-                    "largeImage": {
-                      "url": "https://i.imgur.com/2Hev5Is.jpg",
-                      "accessibilityText": "test"
-                    }
+                    "header": "test",
+                    "horizontalAlignment": "CENTER"
+                  }
+                ],
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "text": "cell"
+                      }
+                    ],
+                    "dividerAfter": true
                   }
                 ]
               }
