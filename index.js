@@ -161,33 +161,8 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
-              "carouselBrowse": {
-                "items": [
-                  {
-                    "title": "Title of item 1",
-                    "openUrlAction": {
-                      "url": "google.com"
-                    },
-                    "description": "Description of item 1",
-                    "footer": "Item 1 footer",
-                    "image": {
-                      "url": "IMG_URL.com",
-                      "accessibilityText": "Image alternate text"
-                    }
-                  },
-                  {
-                    "title": "Google Assistant",
-                    "openUrlAction": {
-                      "url": "google.com"
-                    },
-                    "description": "Google Assistant on Android and iOS",
-                    "footer": "More information about the Google Assistant",
-                    "image": {
-                      "url": "IMG_URL_Assistant.com",
-                      "accessibilityText": "Image alternate text"
-                    }
-                  }
-                ]
+              "simpleResponse": {
+                "textToSpeech": "This is a browse carousel example."
               }
             }
           ]
