@@ -340,7 +340,7 @@ var flavortextGaragePredict = {
     return "Garage " + name + " will have " + number + " out of " + max + " open spots in " + minute + " minutes!";
   },
   3: function(name,max,number,minute){
-    return "Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100))) + " percent chance of open spots in " + minute + " minutes!";
+    return "Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent chance of open spots in " + minute + " minutes!";
   }
 }
 
