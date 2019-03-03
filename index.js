@@ -156,7 +156,6 @@ function intentTemp(req, res, garageJSON){
 
   return res.json({
     "payload": {
-    },
       "google": {
         "expectUserResponse": true,
         "richResponse": {
@@ -199,7 +198,7 @@ function intentTemp(req, res, garageJSON){
           ]
         }
       }
-
+    }
   });
 }
 
