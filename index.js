@@ -7,7 +7,7 @@ const predict_garage = require("./prediction-ucf-garage");
 
 const restService = express();
 
-var garages = {
+const garages = {
   "A": 0,
   "B": 1,
   "C": 2,
@@ -17,7 +17,7 @@ var garages = {
   "Libra": 6
 }
 
-var garage_capacity = {
+const garage_capacity = {
   "A": 1623,
   "B": 1259,
   "C": 1852,
@@ -27,7 +27,7 @@ var garage_capacity = {
   "Libra": 1007
 }
 
-var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 restService.use(
   bodyParser.urlencoded({
@@ -77,7 +77,7 @@ function getRandomInt(max) {
 
 
 
-var intents = {
+const intents = {
   "SpotsLeft": intentSpotsLeft,
   "SpotsTaken": intentSpotsTaken,
   "Garage Prediction Intent": intentGaragePredict,
@@ -98,6 +98,7 @@ var flavortextSpotsLeft = {
     return (count < 50) ? "Only " + subAlias(count) + " spots left!" : "There's " + subAlias(count) + " spots left!";
   },
   1: function(garage, count) {
+<<<<<<< HEAD
     return "There's " + subAlias(count) + " parking spots";
   },
   2: function(garage, count) {
@@ -108,6 +109,18 @@ var flavortextSpotsLeft = {
   },
   4: function(garage, count) {
     return "There are " + subAlias(count) + " spots left in garage " + garage;
+=======
+    return "There's " + count.toString() + " parking spots in garage " + garage + ".";
+  },
+  2: function(garage, count) {
+    return "For garage " + garage + " there are " + count.toString() + " spots.";
+  },
+  3: function(garage, count) {
+    return "Garage " + garage + " currently has " + count.toString() + " spots left.";
+  },
+  4: function(garage, count) {
+    return "There are " + count.toString() + " spots left in garage " + garage + ".";
+>>>>>>> 359cc2e7e4e4622fe4e72717e8d5868804a02290
   }
 }
 
@@ -157,10 +170,14 @@ var flavortextSpotsTaken = {
     return "In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total);
   },
   1: function(garage, count, total){
+<<<<<<< HEAD
     return "There are " + count.toString() + " cars out of " + subAlias(count) + " in garage " + subAlias(total);
+=======
+    return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage + ".";
+>>>>>>> 359cc2e7e4e4622fe4e72717e8d5868804a02290
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full";
+    return "Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full.";
   }
 }
 
@@ -334,16 +351,23 @@ function intentGarageStatus(req, res, garage)
 
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
+<<<<<<< HEAD
     return minute + " minutes from now, garage " + name + " has " + subAlias(number) + " out of " + subAlias(max) + " available spots!";
   },
   1: function(name,max,number,minute){
     return "Garage " + name + " in " + minute + " minutes, has " + subAlias(number) + " out of " + subAlias(max) + " open parking";
+=======
+    return minute + " minutes from now, garage " + name + " will have " + number + " out of " + max + " available spots!";
+  },
+  1: function(name,max,number,minute){
+    return "Garage " + name + " in " + minute + " minutes, has " + number + " out of " + max + " open parking spots";
+>>>>>>> 359cc2e7e4e4622fe4e72717e8d5868804a02290
   },
   2: function(name,max,number,minute){
     return "Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + subAlias(subAlias) + " minutes!";
   },
   3: function(name,max,number,minute){
-    return "Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent chance of open spots in " + minute + " minutes!";
+    return "Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent availability in " + minute + " minutes!";
   }
 }
 
