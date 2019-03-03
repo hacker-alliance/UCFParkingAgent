@@ -95,19 +95,19 @@ function subAlias(number){
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
-    return (count < 50) ? "Only " + subAlias(count) + " spots left!" : "There's " + subAlias(count) + " spots left!";
+    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left!</speak>" : "<speak>There's " + subAlias(count) + " spots left!</speak>";
   },
   1: function(garage, count) {
-    return "There's " + subAlias(count) + " parking spots";
+    return "<speak>There's " + subAlias(count) + " parking spots</speak>";
   },
   2: function(garage, count) {
-    return subAlias(count)+ " spots";
+    return "<speak>"+subAlias(count)+ " spots</speak>";
   },
   3: function(garage, count) {
-    return "Garage " + garage + " currently has " + subAlias(count) + " spots left";
+    return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left</speak>";
   },
   4: function(garage, count) {
-    return "There are " + subAlias(count) + " spots left in garage " + garage;
+    return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
   }
 }
 
