@@ -221,6 +221,10 @@ function intentTemp(req, res, garageJSON){
                 "items": [
                   {
                     "title": "yes",
+                    "image": {
+                      "url": "https://i.imgur.com/xLN8nnt.jpg",
+                      "accessibilityText": "testsdfsdfd"
+                    },
                     "openUrlAction": {
                       "url": "google.com",
                       "androidApp": {
@@ -236,6 +240,10 @@ function intentTemp(req, res, garageJSON){
                   },
                   {
                     "title": "yes2",
+                    "image": {
+                      "url": "https://i.imgur.com/xLN8nnt.jpg",
+                      "accessibilityText": "testsdfsdfd"
+                    },
                     "openUrlAction": {
                       "url": "duckduckgo.com",
                       "androidApp": {
