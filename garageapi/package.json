@@ -1,0 +1,16 @@
+{
+  "name": "garageapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "garageapi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "influx": "^5.0.7"
+  }
+}
