@@ -198,7 +198,7 @@ function intentTemp(req, res, garageJSON){
           ]
         }
       }
-
+    }
   });
 }
 
