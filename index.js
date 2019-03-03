@@ -217,12 +217,21 @@ function intentTemp(req, res, garageJSON){
               }
             },
             {
-              "basicCard": {
-                "formattedText": "hello how are you",
-                "image": {
-                  "url": "https://i.imgur.com/S9jjqRr.jpg",
-                  "accessibilityText": "CHICK FIL A",
-                }
+              "mediaResponse": {
+                "mediaType": "MEDIA_TYPE_UNSPECIFIED",
+                "mediaObjects": [
+                  {
+                    "name": "CHICK FIL A",
+                    "description": "CHICHIFDSFHJD",
+                    "contentUrl": "https://google.com",
+
+                    // Union field image can be only one of the following:
+                    "largeImage": {
+                      "url": "https://i.imgur.com/S9jjqRr.jpg",
+                      "accessibilityText": "CHICK FIL A",
+                    }
+                  }
+                ]
               }
             }
           ],
