@@ -207,19 +207,27 @@ function intentTemp(req, res, garageJSON){
         "richResponse": {
           "items": [
             {
-              "MediaResponse": {
-                "mediaType": MEDIA_TYPE_UNSPECIFIED,
-                "mediaObjects": [
+              "simpleResponse": {
+                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
+              }
+            },
+            {
+              "tableCard": {
+                "title": "test",
+                "columnProperties": [
                   {
-                    "name": "polar bearo",
-                    "description": "white thing",
-                    "contentUrl": "https://en.wikipedia.org/wiki/Polar_bear",
-
-                    // Union field image can be only one of the following:
-                    "largeImage": {
-                      "url": "https://c402277.ssl.cf1.rackcdn.com/photos/2330/images/hero_small/polar-bear-hero.jpg",
-                      "accessibilityText": "test"
-                    }
+                    "header": "test",
+                    "horizontalAlignment": "CENTER"
+                  }
+                ],
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "text": "cell"
+                      }
+                    ],
+                    "dividerAfter": true
                   }
                 ]
               }
