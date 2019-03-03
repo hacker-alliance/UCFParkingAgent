@@ -139,6 +139,7 @@ function intentSpotsTaken(req,res,garageJSON){
 
 function intentTemp(req, res, garageJSON){
   return res.json({
+    "fulfillmentText": "HIIHHIIII",
     "payload": {
       "google": {
         "expectUserResponse": true,
