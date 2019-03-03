@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const scrape_garage = require("./scrape-ucf-garage");
 const predict_garage = require("./prediction-ucf-garage");
-
+const converter = require("number-to-word");
 const restService = express();
 
 var garages = {
@@ -215,7 +215,7 @@ function intentGarageStatus(req, res, garage)
           "items": [
             {
               "simpleResponse": {
-                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% full. Garage B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"% full. Garage C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"% full. Garage D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"% full. Garage H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "% full. Garage I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"% full. Garage Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100)))) +"% full. </speak>" 
+                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% full. Garage B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"% full. Garage C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"% full. Garage D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"% full. Garage H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "% full. Garage I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"% full. Garage Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100)))) +"% full. </speak>"
               }
             },
             {
