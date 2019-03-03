@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const scrape_garage = require("./scrape-ucf-garage");
 const predict_garage = require("./prediction-ucf-garage");
-const converter = require("number-to-word");
+const converter = require("number-to-words");
 const restService = express();
 
 var garages = {
