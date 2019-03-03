@@ -82,8 +82,7 @@ var intents = {
   "SpotsLeft": intentSpotsLeft,
   "SpotsTaken": intentSpotsTaken,
   "Garage Prediction Intent": intentGaragePredict,
-  "GarageStatus": intentGarageStatus,
-  "Temp": intentTemp
+  "GarageStatus": intentGarageStatus
 }
 
 
@@ -143,7 +142,7 @@ function intentSpotsLeft(req, res, garageJSON){
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -159,7 +158,7 @@ var flavortextSpotsTaken = {
     return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage;
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is " + ((count/total)*100).toString() + "% full";
+    return "Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full";
   }
 }
 
@@ -169,7 +168,7 @@ function intentSpotsTaken(req, res, garageJSON){
   var responseText;
 
   if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]]), garage_capacity[garage_name]);
+    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, Math.max(0, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]])), garage_capacity[garage_name]);
 
   return res.json({
     "payload": {
@@ -196,7 +195,7 @@ function intentSpotsTaken(req, res, garageJSON){
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -323,61 +322,7 @@ function intentGarageStatus(req, res, garage)
           ],
           "linkOutSuggestion": {
             "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
-          }
-        }
-      }
-    }
-  });
-}
-
-function intentTemp(req, res, garageJSON){
-  console.log("testestestestes");
-
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
-              }
-            },
-            {
-              "mediaResponse": {
-                "mediaType": "MEDIA_TYPE_UNSPECIFIED",
-                "mediaObjects": [
-                  {
-                    "name": "CHICK FIL A",
-                    "description": "CHICHIFDSFHJD",
-                    "contentUrl": "https://i.imgur.com/S9jjqRr.jpg",
-
-                    // Union field image can be only one of the following:
-                    "largeImage": {
-                      "url": "https://i.imgur.com/S9jjqRr.jpg",
-                      "accessibilityText": "CHICK FIL A",
-                    }
-                  }
-                ]
-              }
-            }
-          ],
-          "suggestions": [
-            {
-              "title": "help me"
-            },
-            {
-              "title": "garage B?"
-            },
-            {
-              "title": "garage A in 20 minutes"
-            }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+            "url": "https://github.com/UCFParking/UCFParkingAgent"
           }
         }
       }
@@ -447,7 +392,7 @@ function intentGaragePredict(req,res,garageJSON){
          ],
          "linkOutSuggestion": {
            "destinationName": "Github",
-           "url": "https://github.com/parking-assist/UCFParkingAssistant"
+           "url": "https://github.com/UCFParking/UCFParkingAgent"
          }
        }
      }
