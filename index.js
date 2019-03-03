@@ -214,12 +214,12 @@ function intentGarageStatus(req, res, garage)
           "items": [
             {
               "simpleResponse": {
-                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
+                "textToSpeech": "Right away!"
               }
             },
             {
               "tableCard": {
-                "title": "test",
+                "title": "Garage Status",
                 "columnProperties": [
                   {
                     "header": "Garage Name"
@@ -236,57 +236,75 @@ function intentGarageStatus(req, res, garage)
                       },
                       {
                         "text": garage[0] + "/" + garage_capacity["A"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage B"
                       },
                       {
                         "text": garage[1] + "/" + garage_capacity["B"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage C"
                       },
                       {
                         "text": garage[2] + "/" + garage_capacity["C"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage D"
                       },
                       {
                         "text": garage[3] + "/" + garage_capacity["D"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage H"
                       },
                       {
                         "text": garage[4] + "/" + garage_capacity["H"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage I"
                       },
                       {
                         "text": garage[5] + "/" + garage_capacity["I"]
-                      }
-                    ],
+                      },
+                      "dividerAfter": true
+                    ]
+                  },
+                  {
                     "cells": [
                       {
                         "text": "Garage Libra"
                       },
                       {
                         "text": garage[6] + "/" + garage_capacity["Libra"]
-                      }
-                    ],
-                    "dividerAfter": true
+                      },
+                      "dividerAfter": true
+                    ]
                   }
                 ]
               }
