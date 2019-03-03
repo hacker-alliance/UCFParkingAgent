@@ -46,14 +46,19 @@ restService.post("/garage", function(req, res) {
     });
   }else{
     // console.log(req.body.queryResult.parameters.time)
-    var date = new Date(req.body.queryResult.parameters.time);
+    if(req.body.queryResult.parameters.timeuntil){
+      var date = new Date(req.body.queryResult.parameters.timeuntil);
+      console.log(days[date.getDay()],date.getHours(),date.getMinutes());
+      predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
+        // console.log(garageJSON);
+        if(intent)
+          return intent(req,res,garageJSON);
+        return res.json({});
+      })
+    }else{
+      res.json({});
+    }
 
-    predict_garage(days[date.getDay()],date.getHours(),date.getDay()).then(function(garageJSON){
-      // console.log(garageJSON);
-      if(intent)
-        return intent(req,res,garageJSON);
-      return res.json({});
-    })
     // console.log(days[date.getDay()] + "   " + date.getHours());
 
 
