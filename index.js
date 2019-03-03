@@ -138,6 +138,8 @@ function intentSpotsTaken(req,res,garageJSON){
 }
 
 function intentTemp(req, res, garageJSON){
+  console.log("testestestestes");
+
   return res.json({
     "fulfillmentText": "HIIHHIIII",
     "payload": {
@@ -161,7 +163,7 @@ function intentTemp(req, res, garageJSON){
                     "description": "Description of item 1",
                     "footer": "Item 1 footer",
                     "image": {
-                      "url": "IMG_URL.com",
+                      "url": "google.com",
                       "accessibilityText": "Image alternate text"
                     }
                   },
@@ -173,7 +175,7 @@ function intentTemp(req, res, garageJSON){
                     "description": "Google Assistant on Android and iOS",
                     "footer": "More information about the Google Assistant",
                     "image": {
-                      "url": "IMG_URL_Assistant.com",
+                      "url": "google.com",
                       "accessibilityText": "Image alternate text"
                     }
                   }
