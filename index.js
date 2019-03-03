@@ -26,7 +26,9 @@ var garage_capacity = {
   "I": 1231,
   "Libra": 1007
 }
+
 var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -42,6 +44,7 @@ restService.post("/garage", function(req, res) {
     scrape_garage().then(function(garageJSON){
         if (intent)
           return intent(req, res, garageJSON);
+
         return res.json({});
     });
   }else{
@@ -49,19 +52,17 @@ restService.post("/garage", function(req, res) {
     if(req.body.queryResult.parameters.timeuntil){
       var date = new Date(req.body.queryResult.parameters.timeuntil);
       console.log(days[date.getDay()],date.getHours(),date.getMinutes());
+
       predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
         // console.log(garageJSON);
         if(intent)
           return intent(req,res,garageJSON);
+
         return res.json({});
       })
     }else{
       res.json({});
     }
-
-    // console.log(days[date.getDay()] + "   " + date.getHours());
-
-
   }
 });
 
@@ -77,11 +78,12 @@ function getRandomInt(max) {
 
 
 
-var intents={
-"SpotsLeft": intentSpotsLeft,
-"SpotsTaken": intentSpotsTaken,
-"Garage Prediction Intent": intentGaragePredict,
-"Temp":intentTemp
+var intents = {
+  "SpotsLeft": intentSpotsLeft,
+  "SpotsTaken": intentSpotsTaken,
+  "Garage Prediction Intent": intentGaragePredict,
+  "GarageStatus": intentGarageStatus,
+  "Temp": intentTemp
 }
 
 
@@ -133,7 +135,7 @@ function intentSpotsLeft(req, res, garageJSON){
               "title": "help me"
             },
             {
-              "title": "garage B?"
+              "title": "garage status"
             },
             {
               "title": "garage A in 20 minutes"
@@ -157,7 +159,7 @@ var flavortextSpotsTaken = {
     return "There are " + count.toString() + " cars out of " + total.toString() + " in garage " + garage;
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is "+ ((count/total)*100).toString() + "% full";
+    return "Garage " + garage + " is " + ((count/total)*100).toString() + "% full";
   }
 }
 
@@ -178,6 +180,62 @@ function intentSpotsTaken(req,res,garageJSON){
             {
               "simpleResponse": {
                 "textToSpeech": responseText
+              }
+            }
+          ],
+          "suggestions": [
+            {
+              "title": "help me"
+            },
+            {
+              "title": "garage status"
+            },
+            {
+              "title": "garage A in 20 minutes"
+            }
+          ],
+          "linkOutSuggestion": {
+            "destinationName": "Github",
+            "url": "https://github.com/parking-assist/UCFParkingAssistant"
+          }
+        }
+      }
+    }
+  });
+}
+
+function intentGarageStatus()
+{
+  return res.json({
+    "payload": {
+      "google": {
+        "expectUserResponse": true,
+        "richResponse": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": "fkflasjdfldks j;dkfjad lfkjkfas"
+              }
+            },
+            {
+              "tableCard": {
+                "title": "test",
+                "columnProperties": [
+                  {
+                    "header": "test",
+                    "horizontalAlignment": "CENTER"
+                  }
+                ],
+                "rows": [
+                  {
+                    "cells": [
+                      {
+                        "text": "cell"
+                      }
+                    ],
+                    "dividerAfter": true
+                  }
+                ]
               }
             }
           ],
@@ -223,7 +281,7 @@ function intentTemp(req, res, garageJSON){
                   {
                     "name": "CHICK FIL A",
                     "description": "CHICHIFDSFHJD",
-                    "contentUrl": "https://google.com",
+                    "contentUrl": "https://i.imgur.com/S9jjqRr.jpg",
 
                     // Union field image can be only one of the following:
                     "largeImage": {
@@ -255,20 +313,22 @@ function intentTemp(req, res, garageJSON){
     }
   });
 }
+
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
-    return minute +" minutes from now, garage "+ name +" has "+number +" out of "+max+" available spots!";
+    return minute + " minutes from now, garage " + name + " has " + number + " out of " + max + " available spots!";
   },
   1: function(name,max,number,minute){
-    return "Garage "+ name +" in " + minute + " minutes, has "+number+" out of "+max+" open parking";
+    return "Garage " + name + " in " + minute + " minutes, has " + number + " out of " + max + " open parking";
   },
   2: function(name,max,number,minute){
-    return "Garage " + name +" will have " + number +" out of " + max + " open spots in " + minute + " minutes!";
+    return "Garage " + name + " will have " + number + " out of " + max + " open spots in " + minute + " minutes!";
   },
   3: function(name,max,number,minute){
-    return "Garage " + name +" is predicted to have a " + Math.ceil(((number/max)*100)) +" percent chance of open spots in " + minute + " minutes!";
+    return "Garage " + name + " is predicted to have a " + Math.ceil(((number/max)*100)) + " percent chance of open spots in " + minute + " minutes!";
   }
 }
+
 function intentGaragePredict(req,res,garageJSON){
  var garage_name = req.body.queryResult.parameters.garage;
  var time = new Date();
@@ -279,13 +339,18 @@ function intentGaragePredict(req,res,garageJSON){
 
  var responseText;
  var flavorCounter3 = getRandomInt(4);
- if(garage_name!="Libra"){
+
+ if(garage_name != "Libra"){
    garage_name = garage_name.charAt(0).toUpperCase();
  }
+
  console.log(garageJSON);
+
  if(garageJSON[garage_name])
-  responseText = flavortextGaragePredict[flavorCounter3](garage_name,garage_capacity[garage_name],garageJSON[garage_name],minute);
+  responseText = flavortextGaragePredict[flavorCounter3](garage_name, garage_capacity[garage_name], garageJSON[garage_name], minute);
+
  console.log(responseText);
+
  return res.json({
    "payload": {
      "google": {
@@ -306,7 +371,7 @@ function intentGaragePredict(req,res,garageJSON){
              "title": "garage B?"
            },
            {
-             "title": "garage A in 20 minutes"
+             "title": "garage status"
            }
          ],
          "linkOutSuggestion": {
