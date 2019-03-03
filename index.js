@@ -217,7 +217,7 @@ function intentTemp(req, res, garageJSON){
               }
             },
             {
-              "carouselResponse": {
+              "carouselBrowse": {
                 "items": [
                   {
                     "title": "yes",
