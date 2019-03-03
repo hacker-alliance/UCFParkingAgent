@@ -154,13 +154,13 @@ function intentSpotsLeft(req, res, garageJSON){
 
 var flavortextSpotsTaken = {
   0: function(garage, count, total){
-    return "In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total);
+    return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+"</speak>";
   },
   1: function(garage, count, total){
-    return "There are " + count.toString() + " cars out of " + subAlias(count) + " in garage " + subAlias(total);
+    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in garage " + garage+"</speak>" ;
   },
   2: function(garage, count, total){
-    return "Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full";
+    return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full</speak>";
   }
 }
 
@@ -215,7 +215,7 @@ function intentGarageStatus(req, res, garage)
           "items": [
             {
               "simpleResponse": {
-                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% full. Garage B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"% full. Garage C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"% full. Garage D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"% full. Garage H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "% full. Garage I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"% full. Garage Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100)))) +"% full. </speak>"
+                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% available parking. Garage B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"% available parking. Garage C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"% available parking. Garage D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"% available parking. Garage H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "% available parking. Garage I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"% available parking. Garage Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100)))) +"% available parking. </speak>"
               }
             },
             {
@@ -334,16 +334,16 @@ function intentGarageStatus(req, res, garage)
 
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
-    return minute + " minutes from now, garage " + name + " has " + subAlias(number) + " out of " + subAlias(max) + " available spots!";
+    return "<speak> "+ minute + "minutes from now, garage " + name + " has " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
   },
   1: function(name,max,number,minute){
-    return "Garage " + name + " in " + minute + " minutes, has " + subAlias(number) + " out of " + subAlias(max) + " open parking";
+    return "<speak> Garage " + name + " in " + minute + " minutes, has " + subAlias(number) + " out of " + subAlias(max) + " open parking</speak>";
   },
   2: function(name,max,number,minute){
-    return "Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + subAlias(subAlias) + " minutes!";
+    return "<speak> Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + subAlias(subAlias) + " minutes!</speak>";
   },
   3: function(name,max,number,minute){
-    return "Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent chance of open spots in " + minute + " minutes!";
+    return "<speak> Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent chance of open spots in " + minute + " minutes!</speak>";
   }
 }
 
