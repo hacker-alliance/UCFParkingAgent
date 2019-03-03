@@ -163,7 +163,7 @@ var flavortextSpotsTaken = {
   }
 }
 
-function intentSpotsTaken(req,res,garageJSON){
+function intentSpotsTaken(req, res, garageJSON){
   var flavorCounter2 = getRandomInt(3);
   var garage_name = req.body.queryResult.parameters.garage;
   var responseText;
@@ -204,7 +204,7 @@ function intentSpotsTaken(req,res,garageJSON){
   });
 }
 
-function intentGarageStatus()
+function intentGarageStatus(req, res, garage)
 {
   return res.json({
     "payload": {
@@ -222,15 +222,68 @@ function intentGarageStatus()
                 "title": "test",
                 "columnProperties": [
                   {
-                    "header": "test",
-                    "horizontalAlignment": "CENTER"
+                    "header": "Garage Name"
+                  },
+                  {
+                    "header": "Spaces Available"
                   }
                 ],
                 "rows": [
                   {
                     "cells": [
                       {
-                        "text": "cell"
+                        "text": "Garage A"
+                      },
+                      {
+                        "text": garage[0] + "/" + garage_capacity["A"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage B"
+                      },
+                      {
+                        "text": garage[1] + "/" + garage_capacity["B"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage C"
+                      },
+                      {
+                        "text": garage[2] + "/" + garage_capacity["C"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage D"
+                      },
+                      {
+                        "text": garage[3] + "/" + garage_capacity["D"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage H"
+                      },
+                      {
+                        "text": garage[4] + "/" + garage_capacity["H"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage I"
+                      },
+                      {
+                        "text": garage[5] + "/" + garage_capacity["I"]
+                      }
+                    ],
+                    "cells": [
+                      {
+                        "text": "Garage Libra"
+                      },
+                      {
+                        "text": garage[6] + "/" + garage_capacity["Libra"]
                       }
                     ],
                     "dividerAfter": true
