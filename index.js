@@ -159,15 +159,27 @@ function intentTemp(req, res, garageJSON){
       "google": {
         "expectUserResponse": true,
         "richResponse": {
-          "items": [
-            {
-              "basicCard": {
-                "title": "ddfasdfds",
-                "subtitle": "dsafdfafdsf",
-                "formattedText": "dfdafdsfa"
-              }
+        "items": [
+          {
+            "simpleResponse": {
+              "textToSpeech": "These are suggestion chips."
             }
-          ]
+          }
+        ],
+        "suggestions": [
+          {
+            "title": "Suggestion Chips"
+          },
+          {
+            "title": "suggestion 1"
+          },
+          {
+            "title": "suggestion 2"
+          }
+        ],
+        "linkOutSuggestion": {
+          "destinationName": "Suggestion Link",
+          "url": "https://assistant.google.com/"
         }
       }
     }
