@@ -39,7 +39,11 @@ const garageDB = new Influx.InfluxDB({
 
 const app = express();
 
-//Get Current Load of Garages
+/*
+ * Garage API
+ * @version 1
+ * @deprecated Use v2 of API Instead
+ */
 app.get('/garages', function (req, res) {
 	garageDB.query(`
 		SELECT * FROM load
@@ -52,7 +56,12 @@ app.get('/garages', function (req, res) {
 	})
 });
 
-//Basic Seasonal Prediction
+/*
+ * Basic Seasonal Prediction API
+ * @version 1
+ * @deprectated Use v2 of API Instead
+ * Uses Most Recent Available Past Season
+ */
 app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
 	garageDB.query(`
 		SELECT * FROM load
@@ -68,21 +77,24 @@ app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
 	})
 });
 
-//Seasonal Prediction Using Holt Winters - In Progress
-app.get('/predictionHW/:weekday/:hour/:minute', function (req, res) {
+/*
+ * Garage Now API
+ * @version 2
+ * Gets Current 
+ */
+app.get('/api/v2/garage/:garage/now', function (req, res) {
+	
 	garageDB.query(`
 		SELECT * FROM load
-		WHERE weekday=${Influx.escape.stringLit(req.params.weekday)}
-		AND hour=${Influx.escape.stringLit(req.params.hour)}
-		AND minute=${Influx.escape.stringLit(req.params.minute)}
+		WHERE garage=${Influx.escape.stringLit(req.params.garage)}
 		ORDER BY time DESC
-		LIMIT 7
+		LIMIT 1
 	`).then(result => {
 		res.json(result)
 	}).catch(err => {
 		res.status(500).send(err.stack)
 	})
-}
+});
 
 //Listen on Port
 app.listen(8080, () => {
