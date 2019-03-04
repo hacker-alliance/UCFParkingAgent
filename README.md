@@ -4,11 +4,14 @@
 ## Description
  - UCF Parking Agent is built upon University of Central Florida's Parking API and used to aid students and professionals alike to find parking at UCF using the Google Assistant.
 
-## Join the beta!
- 1. Go to [this](https://assistant.google.com/services/a/uid/000000112b90785e?hl=en) url.
+## Join the alpha!
+ 1. Open an issue here and give us your email.
+ 1. When we close the issue, go to [this](https://assistant.google.com/services/a/uid/000000112b90785e?hl=en) url.
  2. Attach UCFPA to the Google Account on your phone or Google device.
  3. Start Google Assistant on your device.
  4. Say "Talk to UCF Parking Agent" to begin!
+
+##### P.S. We are trying to deploy ASAP so that all you have to do is open up Google Assistant on any device and say "Talk to UCF Parking Agent"!
 
 ## Setup for cloning
 #### Github Cloning Setup:
