@@ -80,7 +80,7 @@ app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
 /*
  * Garage Now API
  * @version 2
- * Gets Current 
+ * Gets Current Garage Load
  */
 app.get('/api/v2/garage/:garage/now', function (req, res) {
 	
@@ -89,6 +89,27 @@ app.get('/api/v2/garage/:garage/now', function (req, res) {
 		WHERE garage=${Influx.escape.stringLit(req.params.garage)}
 		ORDER BY time DESC
 		LIMIT 1
+	`).then(result => {
+		res.json(result)
+	}).catch(err => {
+		res.status(500).send(err.stack)
+	})
+});
+
+/*
+ * Garage Prediction API
+ * @version 2
+ * Gets Current Garage Load
+ */
+app.get('/api/v2/garage/:garage/prediction/:weekday/:hour/:minute', function (req, res) {
+	
+	garageDB.query(`
+		SELECT MOVING_AVERAGE("available", 2) FROM load
+		WHERE garage=${Influx.escape.stringLit(req.params.garage)}
+		AND weekday=${Influx.escape.stringLit(req.params.weekday)}
+		AND hour=${Influx.escape.stringLit(req.params.hour)}
+		AND minute=${Influx.escape.stringLit(req.params.minute)}
+		ORDER BY time DESC
 	`).then(result => {
 		res.json(result)
 	}).catch(err => {
