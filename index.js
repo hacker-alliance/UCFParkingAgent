@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const scrape_garage = require("./scrape-ucf-garage");
 const predict_garage = require("./prediction-ucf-garage");
+const https = require("https");
 const converter = require("number-to-words");
 const restService = express();
 
@@ -34,6 +35,13 @@ restService.use(
     extended: true
   })
 );
+
+var fs = require('fs');
+
+
+
+
+
 
 restService.use(bodyParser.json());
 
