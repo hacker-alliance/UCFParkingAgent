@@ -53,7 +53,7 @@ restService.post("/garage", function(req, res) {
     if(req.body.queryResult.parameters.timeuntil){
       var date = new Date(req.body.queryResult.parameters.timeuntil);
 
-      predict_garage("Monday",date.getHours(),date.getMinutes()).then(function(garageJSON){
+      predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
         if(intent)
           return intent(req,res,garageJSON);
 
@@ -78,10 +78,10 @@ function getRandomInt(max) {
 
 
 var intents = {
-  "SpotsLeft": intentSpotsLeft,
-  "SpotsTaken": intentSpotsTaken,
+  "Spots Left Intent": intentSpotsLeft,
+  "Spots Taken Intent": intentSpotsTaken,
   "Garage Prediction Intent": intentGaragePredict,
-  "GarageStatus": intentGarageStatus
+  "Garage Status Intent": intentGarageStatus
 }
 
 
