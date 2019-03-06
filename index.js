@@ -7,7 +7,7 @@ const predict_garage = require("./prediction-ucf-garage");
 const converter = require("number-to-words");
 const restService = express();
 
-var garages = {
+const garages = {
   "A": 0,
   "B": 1,
   "C": 2,
@@ -17,7 +17,7 @@ var garages = {
   "Libra": 6
 }
 
-var garage_capacity = {
+const garage_capacity = {
   "A": 1623,
   "B": 1259,
   "C": 1852,
@@ -27,7 +27,7 @@ var garage_capacity = {
   "Libra": 1007
 }
 
-var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 restService.use(
   bodyParser.urlencoded({
@@ -77,7 +77,7 @@ function getRandomInt(max) {
 
 
 
-var intents = {
+const intents = {
   "Spots Left Intent": intentSpotsLeft,
   "Spots Taken Intent": intentSpotsTaken,
   "Garage Prediction Intent": intentGaragePredict,
@@ -95,19 +95,19 @@ function subAlias(number){
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
-    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left!</speak>" : "<speak>There's " + subAlias(count) + " spots left!</speak>";
+    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left in garage " + garage + "!</speak>" : "<speak>There's " + subAlias(count) + " spots left in garage " + garage + "!</speak>";
   },
   1: function(garage, count) {
-    return "<speak>There's " + subAlias(count) + " parking spots</speak>";
+    return "<speak>There's " + subAlias(count) + " parking spots.</speak>";
   },
   2: function(garage, count) {
-    return "<speak>"+subAlias(count)+ " spots</speak>";
+    return "<speak>" +subAlias(count)+ " spots in garage " +  garage + ".</speak>";
   },
   3: function(garage, count) {
-    return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left</speak>";
+    return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left.</speak>";
   },
   4: function(garage, count) {
-    return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
+    return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+".</speak>";
   }
 }
 
@@ -154,13 +154,13 @@ function intentSpotsLeft(req, res, garageJSON){
 
 var flavortextSpotsTaken = {
   0: function(garage, count, total){
-    return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+"</speak>";
+    return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+".</speak>";
   },
   1: function(garage, count, total){
-    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in garage " + garage+"</speak>" ;
+    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in garage " + garage+".</speak>" ;
   },
   2: function(garage, count, total){
-    return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full</speak>";
+    return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full.</speak>";
   }
 }
 
@@ -215,7 +215,7 @@ function intentGarageStatus(req, res, garage)
           "items": [
             {
               "simpleResponse": {
-                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% available parking. Garage B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"% available parking. Garage C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"% available parking. Garage D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"% available parking. Garage H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "% available parking. Garage I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"% available parking. Garage Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[6]/garage_capacity["Libra"])*100)))) +"% available parking. </speak>"
+                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% available parking. B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"%. C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"%. D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"%. H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "%. I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"%. Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[6]/garage_capacity["Libra"])*100)))) +"%. </speak>"
               }
             },
             {
@@ -334,10 +334,10 @@ function intentGarageStatus(req, res, garage)
 
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
-    return "<speak> "+ minute + "minutes from now, garage " + name + " has " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
+    return "<speak> "+ minute + " minutes from now, garage " + name + " will have " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
   },
   1: function(name,max,number,minute){
-    return "<speak> Garage " + name + " in " + minute + " minutes, has " + subAlias(number) + " out of " + subAlias(max) + " open parking</speak>";
+    return "<speak> Garage " + name + " in " + minute + " minutes, will have " + subAlias(number) + " out of " + subAlias(max) + " open parking spots.</speak>";
   },
   2: function(name,max,number,minute){
     return "<speak> Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + subAlias(subAlias) + " minutes!</speak>";
