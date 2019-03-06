@@ -20,8 +20,17 @@
 3. To install all dependency, `npm install`
 4. To launch, `npm start`
 
-#### Dialogflow clone
-TBA
+#### Dialogflow Cloning
+1. Download the Dialogflow copy of the project [here](http://nayoshi.com/UCFParkingAgent.zip).
+2. Create a Dialogflow account and create a new agent.
+3. Click on the gear, click on `Export and Import` and upload the zip files by clicking `Import from ZIP`
+
+#### Deploying Project
+1. To deploy, create a web server with this github project.
+2. Get the external link and add `/garage`.
+ - For example: `https://nayoshi.com/garage`
+3. Click fullfilment and add the URL.
+4. Click Integragation, use whatever platform you want to develop, and have fun!
 
 ## Screenshot
 
