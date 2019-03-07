@@ -21,7 +21,7 @@ var test = {
 restService.use(bodyParser.json());
 
 restService.post("/garage", function(req, res) {
-  const agent = new WebhookClient({req, res});
+  const agent = new WebhookClient({request:req,response: res});
   function availSpace(agent){
     const garageLetter = agent.parameters.garage;
     agent.add("Parking "+garageLetter+" has "+ test[garageLetter] +" available");
