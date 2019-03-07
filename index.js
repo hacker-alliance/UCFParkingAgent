@@ -29,7 +29,7 @@ restService.post("/garage", function(req, res) {
   let intentMap = new Map();
   intentMap.set("Garage Availability",availSpace);
   agent.handleRequest(intentMap);
-
+  console.log(agent.requestSource)
 });
 
 restService.listen(process.env.PORT || 8000, function() {
