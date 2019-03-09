@@ -33,10 +33,9 @@
 4. Click Integragation, use whatever platform you want to develop, and have fun!
 
 ## Screenshot
-
 <img src="https://i.imgur.com/U76HAmx.png" width="400" align="left" />
 
-## UCF Parking Agent Privacy Policy
+## Privacy Policy
 ### What information do we collect?
 The only information that we collect are queries. This information is anonymous and cannot identify individual users.
 
