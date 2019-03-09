@@ -95,19 +95,19 @@ function subAlias(number){
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
-    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left in garage " + garage + "!</speak>" : "<speak>There's " + subAlias(count) + " spots left in garage " + garage + "!</speak>";
+    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left in Garage " + garage + "!</speak>" : "<speak>There's " + subAlias(count) + " spots left in Garage " + garage + "!</speak>";
   },
   1: function(garage, count) {
-    return "<speak>There's " + subAlias(count) + " parking spots.</speak>";
+    return "<speak>There's " + subAlias(count) + " parking spots in Garage " + garage + ".</speak>";
   },
   2: function(garage, count) {
-    return "<speak>" +subAlias(count)+ " spots in garage " +  garage + ".</speak>";
+    return "<speak>" +subAlias(count)+ " spots in Garage " +  garage + ".</speak>";
   },
   3: function(garage, count) {
     return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left.</speak>";
   },
   4: function(garage, count) {
-    return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+".</speak>";
+    return "<speak>There are " + subAlias(count) + " spots left in Garage " + garage+".</speak>";
   }
 }
 
@@ -157,7 +157,7 @@ var flavortextSpotsTaken = {
     return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+".</speak>";
   },
   1: function(garage, count, total){
-    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in garage " + garage+".</speak>" ;
+    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in Garage " + garage+".</speak>" ;
   },
   2: function(garage, count, total){
     return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full.</speak>";
@@ -332,18 +332,52 @@ function intentGarageStatus(req, res, garage)
   });
 }
 
+/**
+ * Formats minutes into hours / minutes
+ * 
+ * @param {number} minutes Total number of minutes
+ * @return {string} Formatted hours / minutes string ex: "1 hour and 30 minutes"
+ */
+
+function flavortextTime (minutes) {
+  timetext = "";
+  hours = minutes % 60;
+  minutes -= hours * 60;
+
+  //Hours  
+  if (hours == 1) {
+    timetext += "1 hour";
+  }
+  else if (hours > 1) {
+    timetext += hours + " hours";
+  }
+
+  //Add "and" if adding minutes
+  if (hours > 0 && minutes > 0) {
+    timetext += " and ";
+  }
+  //Minutes
+  if (minutes == 1) {
+    timetext += "1 minute";
+  }
+  else if (minutes > 1) {
+    timetext += minutes + " minutes"
+  }
+  return timetext;
+}
+
 var flavortextGaragePredict = {
   0: function(name,max,number,minute){
-    return "<speak> "+ minute + " minutes from now, garage " + name + " will have " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
+    return "<speak> " + flavortextTime(minute) + " from now, Garage " + name + " will have " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
   },
   1: function(name,max,number,minute){
-    return "<speak> Garage " + name + " in " + minute + " minutes, will have " + subAlias(number) + " out of " + subAlias(max) + " open parking spots.</speak>";
+    return "<speak> Garage " + name + " in " + flavortextTime(minute) + ", will have " + subAlias(number) + " out of " + subAlias(max) + " open parking spots.</speak>";
   },
   2: function(name,max,number,minute){
-    return "<speak> Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + subAlias(subAlias) + " minutes!</speak>";
+    return "<speak> Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + flavortextTime(minute) + "!</speak>";
   },
   3: function(name,max,number,minute){
-    return "<speak> Garage " + name + " is predicted to have a " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent chance of open spots in " + minute + " minutes!</speak>";
+    return "<speak> Garage " + name + " is predicted to have " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent available spots in " + minute + " minutes!</speak>";
   }
 }
 
