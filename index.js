@@ -341,7 +341,7 @@ function intentGarageStatus(req, res, garage)
 
 function flavortextTime (minutes) {
   var timetext = "";
-  hours = minutes % 60;
+  var hours = minutes % 60;
   minutes -= hours * 60;
 
   //Hours  
