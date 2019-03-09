@@ -340,7 +340,7 @@ function intentGarageStatus(req, res, garage)
  */
 
 function flavortextTime (minutes) {
-  timetext = "";
+  var timetext = "";
   hours = minutes % 60;
   minutes -= hours * 60;
 
@@ -389,7 +389,8 @@ function intentGaragePredict(req, res, garageJSON){
   var minute = Math.ceil(second/60);
 
   var responseText;
-  var flavorCounter3 = getRandomInt(4);
+  //Set to 3 to remove percent available for prediction
+  var flavorCounter3 = getRandomInt(3);
 
   if(garage_name != "Libra"){
     garage_name = garage_name.charAt(0).toUpperCase();
