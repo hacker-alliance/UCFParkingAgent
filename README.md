@@ -39,7 +39,7 @@
 ### What information do we collect?
 The only information that we collect are queries. This information is anonymous and cannot identify individual users.
 
-### How do we use this infromation?
+### How do we use this information?
 It is necessary for us to receive queries in order to answer them, and we use logs for debugging purposes.
 
 ### What information do we share?
