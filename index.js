@@ -67,6 +67,7 @@ var flavortextSpotsLeft = {
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
   scraper().then((data)=>{
+    console.log(garageLetter,data[garageLetter]);
     agent.add(new Text({
       text:flavortextSpotsLeft[0](garageLetter,data[garageLetter]),
       platform: "ACTIONS_ON_GOOGLE"
