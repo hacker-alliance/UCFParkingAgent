@@ -1,6 +1,6 @@
 module.exports = [
-  "tell me about garage status",
-  "how is garage b an hour from now",
+  "garage status",
+  "garage b in 1 hour ",
   "how full is libra",
   "about the app"
 ]
