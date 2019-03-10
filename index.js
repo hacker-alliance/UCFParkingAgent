@@ -59,7 +59,7 @@ function spotsLeft(agent){
     title: 'garage status',
     platform: 'ACTIONS_ON_GOOGLE'
   }));
-  for(int i=0;i<suggestions.length;i++){
+  for(i=0;i<suggestions.length;i++){
     agent.add(new Suggestion({
       title: suggestions[i],
       platform: 'ACTIONS_ON_GOOGLE'
