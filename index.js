@@ -55,10 +55,6 @@ function spotsLeft(agent){
     text:flavortextSpotsLeft[0]("B",5520),
     platform: "ACTIONS_ON_GOOGLE"
   }));
-  agent.add(new Suggestion({
-    title: 'garage status',
-    platform: 'ACTIONS_ON_GOOGLE'
-  }));
   for(i=0;i<suggestions.length;i++){
     agent.add(new Suggestion({
       title: suggestions[i],
