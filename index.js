@@ -73,12 +73,12 @@ function spotsLeft(agent){
       platform: "ACTIONS_ON_GOOGLE"
     }));
 
-    for(i=0;i<suggestions.length;i++){
-      agent.add(new Suggestion({
-        title: suggestions[i],
-        platform: 'ACTIONS_ON_GOOGLE'
-      }));
-    }
+    // for(i=0;i<suggestions.length;i++){
+    //   agent.add(new Suggestion({
+    //     title: suggestions[i],
+    //     platform: 'ACTIONS_ON_GOOGLE'
+    //   }));
+    // }
   })
 }
 
