@@ -42,8 +42,8 @@ var flavortextSpotsLeft = {
  const anotherCard = new Card({
      title: 'card title',
      text: 'card text',
-     imageUrl: https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png,
-     buttonText: This is a button',
+     imageUrl: "https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+     buttonText: 'This is a button',
      buttonUrl: 'https://assistant.google.com/',
      platform: 'ACTIONS_ON_GOOGLE'
  });
