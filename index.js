@@ -70,7 +70,7 @@ function spotsLeft(agent){
 
   (async ()=>{
     let jsondata = await scraper();
-    let response = flavortextSpotsLeft[0](garageLetter,data[garages[garageLetter]]);
+    let response = flavortextSpotsLeft[0](garageLetter,jsondata[garages[garageLetter]]);
     console.log(response);
     agent.add(new Text({
       text: response,
