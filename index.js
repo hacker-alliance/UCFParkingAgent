@@ -1,7 +1,7 @@
 const express = require('express');
 const {WebhookClient} = require('dialogflow-fulfillment');
 const converter = require('number-to-words');
-const {Card, Suggestion} = require('dialogflow-fulfillment');
+const {Text, Card, Suggestion} = require('dialogflow-fulfillment');
 const bodyParser = require("body-parser");
 const restService = express();
 restService.use(
@@ -41,7 +41,10 @@ var flavortextSpotsLeft = {
 }
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
-  agent.add(flavortextSpotsLeft[0]("B",5520));
+  agent.add(new Text({
+    text:flavortextSpotsLeft[0]("B",5520),
+    platform: "ACTIONS_ON_GOOGLE"
+  }));
 }
 
 restService.use(bodyParser.json());
