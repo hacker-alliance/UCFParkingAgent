@@ -67,7 +67,7 @@ var flavortextSpotsLeft = {
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
 
-
+  agent.add("Getting Parking Status");
   (async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsLeft[0](garageLetter,jsondata[garages[garageLetter]]);
