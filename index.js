@@ -82,6 +82,20 @@ async function spotsLeft(agent){
 
 }
 
+// * let suggestion = new Suggestion('suggestion');
+// * const anotherSuggestion = new Suggestion({
+// *     title: 'suggestion',
+// *     platform: 'ACTIONS_ON_GOOGLE'
+// * });
+async function welcome(agent){
+
+
+  for(int i =0;i<suggestions.length;i++){
+    console.log(suggestions[i]);
+  }
+
+}
+
 restService.use(bodyParser.json());
 
 restService.post("/garage", function(req, res) {
@@ -89,6 +103,7 @@ restService.post("/garage", function(req, res) {
 
   let intentMap = new Map();
   intentMap.set("Spots Left Intent",spotsLeft);
+  intentMap.set("Default Welcome Intent", welcome);
   agent.handleRequest(intentMap);
   console.log(agent.intent);
 
