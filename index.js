@@ -92,7 +92,9 @@ async function welcome(agent){
 
   for(i =0;i<suggestions.length;i++){
     console.log(suggestions[i]);
+    agent.add(new Suggestion(suggestions[i]));
   }
+  return agent;
 
 }
 
