@@ -66,20 +66,19 @@ var flavortextSpotsLeft = {
 
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
-  scraper().then((data)=>{
-    console.log(garageLetter,data[garages[garageLetter]]);
+
+
+  (async ()=>{
+    let jsondata = await scraper();
+    let response = flavortextSpotsLeft[0](garageLetter,data[garages[garageLetter]]);
+
     agent.add(new Text({
-      text:flavortextSpotsLeft[0](garageLetter,data[garages[garageLetter]]),
+      text: response,
       platform: "ACTIONS_ON_GOOGLE"
     }));
+  })();
 
-    // for(i=0;i<suggestions.length;i++){
-    //   agent.add(new Suggestion({
-    //     title: suggestions[i],
-    //     platform: 'ACTIONS_ON_GOOGLE'
-    //   }));
-    // }
-  })
+
 }
 
 restService.use(bodyParser.json());
