@@ -90,7 +90,7 @@ async function spotsLeft(agent){
 async function welcome(agent){
 
 
-  for(int i =0;i<suggestions.length;i++){
+  for(i =0;i<suggestions.length;i++){
     console.log(suggestions[i]);
   }
 
