@@ -1,5 +1,7 @@
 const express = require('express');
 const {WebhookClient} = require('dialogflow-fulfillment');
+
+const {Card, Suggestion} = require('dialogflow-fulfillment');
 const bodyParser = require("body-parser");
 const restService = express();
 restService.use(
@@ -17,9 +19,29 @@ var test = {
   "I":5,
   "Libra": 5
 }
-function availSpace(agent){
+function subAlias(number){
+  return "<sub alias=\""+converter.toWords(number)+"\">"+number+"</sub>";
+}
+var flavortextSpotsLeft = {
+  0: function(garage, count) {
+    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left!</speak>" : "<speak>There's " + subAlias(count) + " spots left!</speak>";
+  },
+  1: function(garage, count) {
+    return "<speak>There's " + subAlias(count) + " parking spots</speak>";
+  },
+  2: function(garage, count) {
+    return "<speak>"+subAlias(count)+ " spots</speak>";
+  },
+  3: function(garage, count) {
+    return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left</speak>";
+  },
+  4: function(garage, count) {
+    return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
+  }
+}
+function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
-  agent.add("Parking "+garageLetter+" has "+ test[garageLetter] +" available");
+  agent.add(flavortextSpotsLeft[0]("B",5520));
 }
 
 restService.use(bodyParser.json());
@@ -28,7 +50,7 @@ restService.post("/garage", function(req, res) {
   const agent = new WebhookClient({request:req,response: res});
 
   let intentMap = new Map();
-  intentMap.set("Spots Left Intent",availSpace);
+  intentMap.set("Spots Left Intent",spotsLeft);
   agent.handleRequest(intentMap);
   console.log(agent.requestSource);
 
