@@ -5,8 +5,8 @@ const {Text, Card, Suggestion} = require('dialogflow-fulfillment');
 const bodyParser = require("body-parser");
 const predictor = require("./prediction-ucf-garage");
 const restService = express();
-const scraper = require("scrape-ucf-garage.js");
-const suggestions = require("./suggestion.js");
+const scraper = require("./scrape-ucf-garage");
+const suggestions = require("./suggestion");
 restService.use(
   bodyParser.urlencoded({
     extended: true
