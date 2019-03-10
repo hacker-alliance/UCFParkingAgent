@@ -64,11 +64,10 @@ var flavortextSpotsLeft = {
  //     platform: 'ACTIONS_ON_GOOGLE'
  // });
 
-function spotsLeft(agent){
+async function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
 
-
-  agent.add((async ()=>{
+  let test = await (async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsLeft[0](garageLetter,jsondata[garages[garageLetter]]);
     console.log(response);
@@ -77,7 +76,8 @@ function spotsLeft(agent){
       platform: "ACTIONS_ON_GOOGLE"
     });
 
-  })());
+  })();
+  agent.add(test);
 
 
 }
