@@ -28,7 +28,7 @@ restService.post("/garage", function(req, res) {
   const agent = new WebhookClient({request:req,response: res});
 
   let intentMap = new Map();
-  intentMap.set("Garage Availability",availSpace);
+  intentMap.set("Spots Left Intent",availSpace);
   agent.handleRequest(intentMap);
   console.log(agent.requestSource);
 
