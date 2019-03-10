@@ -4,6 +4,7 @@ const converter = require('number-to-words');
 const {Text, Card, Suggestion} = require('dialogflow-fulfillment');
 const bodyParser = require("body-parser");
 const restService = express();
+const suggestions = require("./suggestion.js");
 restService.use(
   bodyParser.urlencoded({
     extended: true
@@ -47,6 +48,7 @@ var flavortextSpotsLeft = {
      buttonUrl: 'https://assistant.google.com/',
      platform: 'ACTIONS_ON_GOOGLE'
  });
+
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
   agent.add(new Text({
@@ -57,7 +59,12 @@ function spotsLeft(agent){
     title: 'garage status',
     platform: 'ACTIONS_ON_GOOGLE'
   }));
-  agent.add(anotherCard);
+  for(int i=0;i<suggestions.length;i++){
+    agent.add(new Suggestion({
+      title: suggestions[i],
+      platform: 'ACTIONS_ON_GOOGLE'
+    }));
+  }
 }
 
 restService.use(bodyParser.json());
