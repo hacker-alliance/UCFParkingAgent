@@ -90,7 +90,7 @@ restService.post("/garage", function(req, res) {
   let intentMap = new Map();
   intentMap.set("Spots Left Intent",spotsLeft);
   agent.handleRequest(intentMap);
-  console.log(agent.requestSource);
+  console.log(agent);
 
 });
 
