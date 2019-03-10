@@ -3,7 +3,9 @@ const {WebhookClient} = require('dialogflow-fulfillment');
 const converter = require('number-to-words');
 const {Text, Card, Suggestion} = require('dialogflow-fulfillment');
 const bodyParser = require("body-parser");
+const predictor = require("./prediction-ucf-garage");
 const restService = express();
+const scraper = require("scrape-ucf-garage.js");
 const suggestions = require("./suggestion.js");
 restService.use(
   bodyParser.urlencoded({
@@ -11,18 +13,31 @@ restService.use(
   })
 );
 
-var test = {
-  "A":5,
-  "B":6,
-  "C":7,
-  "D":2,
-  "H":3,
-  "I":5,
-  "Libra": 5
+var garages = {
+  "A": 0,
+  "B": 1,
+  "C": 2,
+  "D": 3,
+  "H": 4,
+  "I": 5,
+  "Libra": 6
 }
+
+var garage_capacity = {
+  "A": 1623,
+  "B": 1259,
+  "C": 1852,
+  "D": 1241,
+  "H": 1284,
+  "I": 1231,
+  "Libra": 1007
+}
+
 function subAlias(number){
   return "<sub alias=\""+converter.toWords(number)+"\">"+number+"</sub>";
 }
+
+
 var flavortextSpotsLeft = {
   0: function(garage, count) {
     return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left!</speak>" : "<speak>There's " + subAlias(count) + " spots left!</speak>";
@@ -40,27 +55,30 @@ var flavortextSpotsLeft = {
     return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
   }
 }
- const anotherCard = new Card({
-     title: 'card title',
-     text: 'card text',
-     imageUrl: "https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
-     buttonText: 'This is a button',
-     buttonUrl: 'https://assistant.google.com/',
-     platform: 'ACTIONS_ON_GOOGLE'
- });
+ // const anotherCard = new Card({
+ //     title: 'card title',
+ //     text: 'card text',
+ //     imageUrl: "https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png",
+ //     buttonText: 'This is a button',
+ //     buttonUrl: 'https://assistant.google.com/',
+ //     platform: 'ACTIONS_ON_GOOGLE'
+ // });
 
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
-  agent.add(new Text({
-    text:flavortextSpotsLeft[0]("B",5520),
-    platform: "ACTIONS_ON_GOOGLE"
-  }));
-  for(i=0;i<suggestions.length;i++){
-    agent.add(new Suggestion({
-      title: suggestions[i],
-      platform: 'ACTIONS_ON_GOOGLE'
+  scraper().then((data)=>{
+    agent.add(new Text({
+      text:flavortextSpotsLeft[0](garageLetter,data[garageLetter]),
+      platform: "ACTIONS_ON_GOOGLE"
     }));
-  }
+
+    for(i=0;i<suggestions.length;i++){
+      agent.add(new Suggestion({
+        title: suggestions[i],
+        platform: 'ACTIONS_ON_GOOGLE'
+      }));
+    }
+  })
 }
 
 restService.use(bodyParser.json());
