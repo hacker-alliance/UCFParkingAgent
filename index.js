@@ -69,7 +69,7 @@ function spotsLeft(agent){
   scraper().then((data)=>{
     console.log(garageLetter,data[garages[garageLetter]]);
     agent.add(new Text({
-      text:flavortextSpotsLeft[0](garageLetter,data[garageLetter]),
+      text:flavortextSpotsLeft[0](garageLetter,data[garages[garageLetter]]),
       platform: "ACTIONS_ON_GOOGLE"
     }));
 
