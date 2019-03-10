@@ -71,7 +71,7 @@ function spotsLeft(agent){
   (async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsLeft[0](garageLetter,data[garages[garageLetter]]);
-
+    console.log(response);
     agent.add(new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
