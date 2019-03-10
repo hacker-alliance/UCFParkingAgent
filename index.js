@@ -67,16 +67,17 @@ var flavortextSpotsLeft = {
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
 
-  agent.add("Getting Parking Status");
-  (async ()=>{
+
+  agent.add((async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsLeft[0](garageLetter,jsondata[garages[garageLetter]]);
     console.log(response);
-    return agent.add(new Text({
+    return new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
-    }));
-  })();
+    });
+
+  })());
 
 
 }
