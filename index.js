@@ -17,19 +17,21 @@ var test = {
   "I":5,
   "Libra": 5
 }
+function availSpace(agent){
+  const garageLetter = agent.parameters.garage;
+  agent.add("Parking "+garageLetter+" has "+ test[garageLetter] +" available");
+}
 
 restService.use(bodyParser.json());
 
 restService.post("/garage", function(req, res) {
   const agent = new WebhookClient({request:req,response: res});
-  function availSpace(agent){
-    const garageLetter = agent.parameters.garage;
-    agent.add("Parking "+garageLetter+" has "+ test[garageLetter] +" available");
-  }
+
   let intentMap = new Map();
   intentMap.set("Garage Availability",availSpace);
   agent.handleRequest(intentMap);
-  console.log(agent.requestSource)
+  console.log(agent.requestSource);
+
 });
 
 restService.listen(process.env.PORT || 8000, function() {
