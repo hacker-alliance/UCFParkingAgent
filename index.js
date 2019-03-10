@@ -39,12 +39,25 @@ var flavortextSpotsLeft = {
     return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
   }
 }
+ const anotherCard = new Card({
+     title: 'card title',
+     text: 'card text',
+     imageUrl: https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png,
+     buttonText: This is a button',
+     buttonUrl: 'https://assistant.google.com/',
+     platform: 'ACTIONS_ON_GOOGLE'
+ });
 function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
   agent.add(new Text({
     text:flavortextSpotsLeft[0]("B",5520),
     platform: "ACTIONS_ON_GOOGLE"
   }));
+  agent.add(new Suggestion({
+    title: 'garage status',
+    platform: 'ACTIONS_ON_GOOGLE'
+  }));
+  agent.add(anotherCard);
 }
 
 restService.use(bodyParser.json());
