@@ -14,6 +14,8 @@ module.exports = function(){
       const $ = cheerio.load(body);
 
       // Parse and save garage parking spaces number
+
+      // TODO: Changed from index (0-6) to actual names of garages
     	$('strong').each(function(i, elem) {
     		//Get Garage Load
     		garageAvail[i] = $(this).text();
