@@ -88,7 +88,7 @@ app.intent('Spots Taken Intent',conv =>{
 
 
   conv.ask(spotsTaken(conv));
-  addSuggestions(conv);
+  addsuggestions(conv);
 })
 // function spotsTaken(agent){
 //   const garageLetter = agent.parameters.garage;
