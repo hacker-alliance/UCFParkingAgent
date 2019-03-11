@@ -90,9 +90,10 @@ function addSuggestions(agent){
 
 async function spotsTaken(agent){
   const garageLetter = agent.parameters.garage;
-  console.log("TEST" + garageLetter);
+  console.log("TEST        " + flavortextSpotsTaken[getRandomInt(3)](0,garage_capacity["B"],garage_capacity["B"]));
   let scrapedata = await(async ()=>{
     let jsondata = await scraper();
+
     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-parseInt(jsondata[garages[garageLetter]])),garage_capacity[garageLetter]);
 
 
