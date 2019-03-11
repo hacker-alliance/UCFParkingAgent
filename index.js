@@ -41,10 +41,8 @@ app.intent('Default Welcome Intent', conv => {
   conv.ask('Hi, how is it going?');
   addsuggestions(conv);
 })
-app.intent('Spots Taken Intent',conv =>{
-  console.log(conv);
-  const garageLetter = conv.parameters.garage;
-  let scrapedata = await(async ()=>{
+async function spotsTaken(agent){
+  let scrapedata = await (async ()=>{
     let jsondata = await scraper();
     console.log(jsondata);
     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-jsondata[garages[garageLetter]]),garage_capacity[garageLetter]);
@@ -54,8 +52,14 @@ app.intent('Spots Taken Intent',conv =>{
         speech: response,
         text: "TESTTTTT",
       }));
+      addSuggestions(conv);
   })();
-  addSuggestions(conv);
+}
+app.intent('Spots Taken Intent',conv =>{
+  console.log(conv);
+  const garageLetter = conv.parameters.garage;
+
+  spotsTaken(agent);
 })
 // function spotsTaken(agent){
 //   const garageLetter = agent.parameters.garage;
