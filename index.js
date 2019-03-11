@@ -85,12 +85,21 @@ async function spotsTaken(conv){
   return scrapedata;
 }
 app.intent('Spots Taken Intent',conv =>{
-  console.log(conv);
 
-
-  async ()=>{
-    await conv.ask(spotsTaken(conv));
-  }
+  const garageLetter = conv.parameters.garage;
+  scraper().then((datajson)=>{
+    let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-datajson[garages[garageLetter]]),garage_capacity[garageLetter]);
+    conv.ask(new SimpleResponse({
+        // <speak></speak> is needed here since factPrefix is a SSML string
+        // and contains audio.
+        speech: response,
+        text: response,
+      }));
+  });
+  //
+  // async ()=>{
+  //   await conv.ask(spotsTaken(conv));
+  // }
   addsuggestions(conv);
 })
 // function spotsTaken(agent){
