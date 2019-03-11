@@ -93,6 +93,7 @@ app.intent('Spots Taken Intent',conv =>{
       speech:"PLEASE WORK",
       text: "PLEASE" + 1 + " WORK"}));
     addsuggestions(conv);
+    return conv;
   });
 
 
