@@ -93,16 +93,14 @@ async function spotsTaken(agent){
   console.log("TEST        " + flavortextSpotsTaken[getRandomInt(3)](0,garage_capacity["B"],garage_capacity["B"]));
   let scrapedata = await(async ()=>{
     let jsondata = await scraper();
+    console.log(jsondata);
+    let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-jsondata[garages[garageLetter]]),garage_capacity[garageLetter]);
 
-    let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-parseInt(jsondata[garages[garageLetter]])),garage_capacity[garageLetter]);
-
-
-    return new Text({
+     agent.add(new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
-    });
+    }));
   });
-  agent.add(scrapedata);
 
   addSuggestions(agent);
 
