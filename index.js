@@ -9,7 +9,7 @@ const {
 } = require('actions-on-google');
 const bodyParser = require("body-parser");
 const restService = express();
-
+const suggestions = require("./suggestion");
 const app = dialogflow();
 
 restService.use(
@@ -19,6 +19,13 @@ restService.use(
 );
 restService.use(bodyParser.json());
 
+function addSuggestions(conv){
+  for(i =0;i<suggestion.length;i++){
+    // console.log(suggestions[i]);
+    agent.add(new Suggestions(suggestions[i]));
+  }
+}
+
 app.intent('Default Welcome Intent', conv => {
   conv.ask('Hi, how is it going?')
   conv.ask(`Here's a picture of a cat`)
@@ -26,8 +33,8 @@ app.intent('Default Welcome Intent', conv => {
     url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
     alt: 'A cat',
   }))
+  agent.add(new Suggestions(suggestions[1]));
 })
-
 
 
 restService.post("/garage", app);
