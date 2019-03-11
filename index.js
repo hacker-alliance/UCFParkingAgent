@@ -41,7 +41,7 @@ app.intent('Default Welcome Intent', conv => {
   conv.ask('Hi, how is it going?');
   addsuggestions(conv);
 })
-async function spotsTaken(agent){
+async function spotsTaken(conv){
   let scrapedata = await (async ()=>{
     let jsondata = await scraper();
     console.log(jsondata);
