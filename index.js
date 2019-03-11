@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const restService = express();
 const suggestions = require("./suggestion");
 const app = dialogflow();
+const scraper = require("./scrape-ucf-garage");
 
 restService.use(
   bodyParser.urlencoded({
@@ -55,23 +56,23 @@ app.intent('Spots Taken Intent',conv =>{
   })();
   addSuggestions(conv);
 })
-function spotsTaken(agent){
-  const garageLetter = agent.parameters.garage;
-  let scrapedata = await(async ()=>{
-    let jsondata = await scraper();
-    console.log(jsondata);
-    let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-jsondata[garages[garageLetter]]),garage_capacity[garageLetter]);
-
-     agent.add(new Text({
-      text: response,
-      platform: "ACTIONS_ON_GOOGLE"
-    }));
-  })();
-
-  addSuggestions(agent);
-
-  return agent;
-}
+// function spotsTaken(agent){
+//   const garageLetter = agent.parameters.garage;
+//   let scrapedata = await(async ()=>{
+//     let jsondata = await scraper();
+//     console.log(jsondata);
+//     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-jsondata[garages[garageLetter]]),garage_capacity[garageLetter]);
+//
+//      agent.add(new Text({
+//       text: response,
+//       platform: "ACTIONS_ON_GOOGLE"
+//     }));
+//   })();
+//
+//   addSuggestions(agent);
+//
+//   return agent;
+// }
 
 
 
