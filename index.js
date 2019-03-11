@@ -19,7 +19,33 @@ restService.use(
   })
 );
 restService.use(bodyParser.json());
+var garages = {
+  "A": 0,
+  "B": 1,
+  "C": 2,
+  "D": 3,
+  "H": 4,
+  "I": 5,
+  "Libra": 6
+}
 
+var garage_capacity = {
+  "A": 1623,
+  "B": 1259,
+  "C": 1852,
+  "D": 1241,
+  "H": 1284,
+  "I": 1231,
+  "Libra": 1007
+}
+
+function subAlias(number){
+  return "<sub alias=\""+converter.toWords(number)+"\">"+number+"</sub>";
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 var flavortextSpotsTaken = {
   0: function(garage, count, total){
     return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+"</speak>";
