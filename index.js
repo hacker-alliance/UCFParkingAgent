@@ -33,7 +33,7 @@ app.intent('Default Welcome Intent', conv => {
     url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
     alt: 'A cat',
   }))
-  agent.add(new Suggestions(suggestions[1]));
+  conv.ask(new Suggestions(suggestions[1]));
 })
 
 
