@@ -92,13 +92,14 @@ app.intent('Spots Taken Intent',conv =>{
     conv.ask(new SimpleResponse({
       speech:"PLEASE WORK",
       text: "PLEASE" + 1 + " WORK"}));
+    addsuggestions(conv);
   });
 
 
   // async ()=>{
   //   await conv.ask(spotsTaken(conv));
   // }
-  addsuggestions(conv);
+
 })
 // function spotsTaken(agent){
 //   const garageLetter = agent.parameters.garage;
