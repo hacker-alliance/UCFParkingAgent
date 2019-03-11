@@ -97,6 +97,7 @@ app.intent('Spots Taken Intent',conv =>{
   // });
   //
   conv.ask(new SimpleResponse({
+    speech:"PLEASE WORK",
     text: "PLEASE WORK"}));
   // async ()=>{
   //   await conv.ask(spotsTaken(conv));
