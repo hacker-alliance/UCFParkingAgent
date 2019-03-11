@@ -24,5 +24,5 @@ app.intent('Default Welcome Intent', conv => {
 
 restService.post("/garage", app);
 restService.listen(process.env.PORT || 8000, function() {
-  console.log("Server up and listening v2");
+  console.log("Server up and listening v3");
 });
