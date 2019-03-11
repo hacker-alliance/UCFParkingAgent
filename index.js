@@ -73,20 +73,22 @@ async function spotsTaken(conv){
     let jsondata = await scraper();
     console.log(jsondata);
     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-jsondata[garages[garageLetter]]),garage_capacity[garageLetter]);
-    conv.ask(new SimpleResponse({
+    return new SimpleResponse({
         // <speak></speak> is needed here since factPrefix is a SSML string
         // and contains audio.
         speech: response,
         text: "TESTTTTT",
       }));
-      addSuggestions(conv);
+
   })();
+  return scrapedata;
 }
 app.intent('Spots Taken Intent',conv =>{
   console.log(conv);
 
 
-  spotsTaken(conv);
+  conv.ask(spotsTaken(conv));
+  addSuggestions(conv);
 })
 // function spotsTaken(agent){
 //   const garageLetter = agent.parameters.garage;
