@@ -5,6 +5,7 @@ const {
   BasicCard,
   Button,
   SimpleResponse,
+  Image,
 } = require('actions-on-google');
 const bodyParser = require("body-parser");
 const restService = express();
