@@ -88,7 +88,9 @@ app.intent('Spots Taken Intent',conv =>{
   console.log(conv);
 
 
-  conv.ask(spotsTaken(conv));
+  async ()=>{
+    await conv.ask(spotsTaken(conv));
+  }
   addsuggestions(conv);
 })
 // function spotsTaken(agent){
