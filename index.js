@@ -92,7 +92,6 @@ app.intent('Spots Taken Intent',conv =>{
     conv.ask(new SimpleResponse({
         // <speak></speak> is needed here since factPrefix is a SSML string
         // and contains audio.
-        speech: response,
         text: response,
       }));
   });
