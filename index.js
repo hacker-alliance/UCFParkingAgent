@@ -10,6 +10,12 @@ const restService = express();
 
 const app = dialogflow();
 
+restService.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+restService.use(bodyParser.json());
 
 app.intent('Default Welcome Intent', conv => {
   conv.ask('Hi, how is it going?')
