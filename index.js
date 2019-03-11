@@ -37,6 +37,9 @@ function subAlias(number){
   return "<sub alias=\""+converter.toWords(number)+"\">"+number+"</sub>";
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 var flavortextSpotsLeft = {
   0: function(garage, count) {
@@ -55,6 +58,18 @@ var flavortextSpotsLeft = {
     return "<speak>There are " + subAlias(count) + " spots left in garage " + garage+"</speak>";
   }
 }
+
+var flavortextSpotsTaken = {
+  0: function(garage, count, total){
+    return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+"</speak>";
+  },
+  1: function(garage, count, total){
+    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in garage " + garage+"</speak>" ;
+  },
+  2: function(garage, count, total){
+    return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full</speak>";
+  }
+}
  // const anotherCard = new Card({
  //     title: 'card title',
  //     text: 'card text',
@@ -63,18 +78,41 @@ var flavortextSpotsLeft = {
  //     buttonUrl: 'https://assistant.google.com/',
  //     platform: 'ACTIONS_ON_GOOGLE'
  // });
+
+
+
 function addSuggestions(agent){
   for(i =0;i<suggestions.length;i++){
     console.log(suggestions[i]);
     agent.add(new Suggestion(suggestions[i]));
   }
 }
+
+async function spotsTaken(agent){
+  const garageLetter = agent.parameters.garage;
+
+  let scrapedata = await(async ()=>{
+    let jsondata = await scraper();
+    let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-parseInt(jsondata[garages[garageLetter]])),garage_capacity[garageLetter]);
+
+    console.log(response);
+    return new Text({
+      text: response,
+      platform: "ACTIONS_ON_GOOGLE"
+    });
+  });
+  agent.add(scrapedata);
+  addSuggestions(agent);
+
+  return agent;
+}
+
 async function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
 
-  let test = await (async ()=>{
+  let scrapeddata = await (async ()=>{
     let jsondata = await scraper();
-    let response = flavortextSpotsLeft[0](garageLetter,jsondata[garages[garageLetter]]);
+    let response = flavortextSpotsLeft[getRandomInt(5)](garageLetter,jsondata[garages[garageLetter]]);
     console.log(response);
     return new Text({
       text: response,
@@ -82,7 +120,7 @@ async function spotsLeft(agent){
     });
 
   })();
-  agent.add(test);
+  agent.add(scrapeddata);
 
   addSuggestions(agent);
   return agent;
@@ -94,11 +132,8 @@ async function spotsLeft(agent){
 // *     platform: 'ACTIONS_ON_GOOGLE'
 // * });
 async function welcome(agent){
-
-
   addSuggestions(agent);
   return agent;
-
 }
 
 restService.use(bodyParser.json());
@@ -107,8 +142,11 @@ restService.post("/garage", function(req, res) {
   const agent = new WebhookClient({request:req,response: res});
 
   let intentMap = new Map();
+
   intentMap.set("Spots Left Intent",spotsLeft);
+  intentMap.set("Spots Taken Intent",spotsTaken);
   intentMap.set("Default Welcome Intent", welcome);
+
   agent.handleRequest(intentMap);
   console.log(agent.intent);
 
