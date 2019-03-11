@@ -6,6 +6,7 @@ const {
   Button,
   SimpleResponse,
 } = require('actions-on-google');
+const bodyParser = require("body-parser");
 const restService = express();
 
 const app = dialogflow();
