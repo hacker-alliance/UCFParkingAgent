@@ -79,7 +79,11 @@ async function spotsLeft(agent){
   })();
   agent.add(test);
 
-
+  for(i =0;i<suggestions.length;i++){
+    console.log(suggestions[i]);
+    agent.add(new Suggestion(suggestions[i]));
+  }
+  return agent;
 }
 
 // * let suggestion = new Suggestion('suggestion');
