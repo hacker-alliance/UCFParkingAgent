@@ -42,7 +42,8 @@ app.intent('Default Welcome Intent', conv => {
   addsuggestions(conv);
 })
 app.intent('Spots Taken Intent',conv =>{
-  const garageLetter = agent.parameters.garage;
+  console.log(conv);
+  const garageLetter = conv.parameters.garage;
   let scrapedata = await(async ()=>{
     let jsondata = await scraper();
     console.log(jsondata);
