@@ -95,7 +95,7 @@ async function spotsTaken(agent){
     let jsondata = await scraper();
     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-parseInt(jsondata[garages[garageLetter]])),garage_capacity[garageLetter]);
 
-    console.log(response);
+    console.log(response,flavortextSpotsTaken[0](garageLetter,garage_capacity[garageLetter],garage_capacity[garageLetter]));
     return new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
