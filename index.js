@@ -78,7 +78,7 @@ async function spotsTaken(conv){
         // and contains audio.
         speech: response,
         text: "TESTTTTT",
-      }));
+      });
 
   })();
   return scrapedata;
