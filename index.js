@@ -83,7 +83,7 @@ var flavortextSpotsTaken = {
 
 function addSuggestions(agent){
   for(i =0;i<suggestions.length;i++){
-    console.log(suggestions[i]);
+    // console.log(suggestions[i]);
     agent.add(new Suggestion(suggestions[i]));
   }
 }
@@ -113,7 +113,7 @@ async function spotsLeft(agent){
   let scrapeddata = await (async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsLeft[getRandomInt(5)](garageLetter,jsondata[garages[garageLetter]]);
-    console.log(response);
+    // console.log(response);
     return new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
