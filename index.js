@@ -68,6 +68,7 @@ app.intent('Default Welcome Intent', conv => {
   addsuggestions(conv);
 })
 async function spotsTaken(conv){
+  const garageLetter = conv.parameters.garage;
   let scrapedata = await (async ()=>{
     let jsondata = await scraper();
     console.log(jsondata);
@@ -83,7 +84,7 @@ async function spotsTaken(conv){
 }
 app.intent('Spots Taken Intent',conv =>{
   console.log(conv);
-  const garageLetter = conv.parameters.garage;
+
 
   spotsTaken(conv);
 })
