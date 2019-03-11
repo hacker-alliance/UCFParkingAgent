@@ -90,18 +90,19 @@ function addSuggestions(agent){
 
 async function spotsTaken(agent){
   const garageLetter = agent.parameters.garage;
-
+  console.log("TEST" + garageLetter);
   let scrapedata = await(async ()=>{
     let jsondata = await scraper();
     let response = flavortextSpotsTaken[getRandomInt(3)](garageLetter,Math.max(0, garage_capacity[garageLetter]-parseInt(jsondata[garages[garageLetter]])),garage_capacity[garageLetter]);
 
-    console.log("TEST" + garageLetter);
+
     return new Text({
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
     });
   });
   agent.add(scrapedata);
+
   addSuggestions(agent);
 
   return agent;
