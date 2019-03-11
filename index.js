@@ -63,7 +63,12 @@ var flavortextSpotsLeft = {
  //     buttonUrl: 'https://assistant.google.com/',
  //     platform: 'ACTIONS_ON_GOOGLE'
  // });
-
+function addSuggestions(agent){
+  for(i =0;i<suggestions.length;i++){
+    console.log(suggestions[i]);
+    agent.add(new Suggestion(suggestions[i]));
+  }
+}
 async function spotsLeft(agent){
   const garageLetter = agent.parameters.garage;
 
@@ -79,10 +84,7 @@ async function spotsLeft(agent){
   })();
   agent.add(test);
 
-  for(i =0;i<suggestions.length;i++){
-    console.log(suggestions[i]);
-    agent.add(new Suggestion(suggestions[i]));
-  }
+  addSuggestions(agent);
   return agent;
 }
 
@@ -94,10 +96,7 @@ async function spotsLeft(agent){
 async function welcome(agent){
 
 
-  for(i =0;i<suggestions.length;i++){
-    console.log(suggestions[i]);
-    agent.add(new Suggestion(suggestions[i]));
-  }
+  addSuggestions(agent);
   return agent;
 
 }
