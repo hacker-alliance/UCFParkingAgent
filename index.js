@@ -100,7 +100,7 @@ async function spotsTaken(agent){
       text: response,
       platform: "ACTIONS_ON_GOOGLE"
     }));
-  });
+  }());
 
   addSuggestions(agent);
 
