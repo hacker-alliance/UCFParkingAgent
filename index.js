@@ -59,7 +59,7 @@ app.intent('Spots Taken Intent',conv =>{
   console.log(conv);
   const garageLetter = conv.parameters.garage;
 
-  spotsTaken(agent);
+  spotsTaken(conv);
 })
 // function spotsTaken(agent){
 //   const garageLetter = agent.parameters.garage;
