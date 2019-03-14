@@ -3,5 +3,6 @@ module.exports = [
   "garage c available",
   "garage b in 1 hour",
   "how full is libra",
-  "about the app"
+  "about the app",
+  "exit app"
 ]

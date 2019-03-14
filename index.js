@@ -29,9 +29,9 @@ restService.use(
 );
 restService.use(bodyParser.json());
 
-var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-var garages = {
+const garages = {
   "A": 0,
   "B": 1,
   "C": 2,
@@ -41,7 +41,7 @@ var garages = {
   "Libra": 6
 }
 
-var garage_capacity = {
+const garage_capacity = {
   "A": 1623,
   "B": 1259,
   "C": 1852,
@@ -67,9 +67,9 @@ function percentage(num,total){
 }
 
 function flavortextTime (minutes) {
-  timetext = "";
-  hours = minutes % 60;
-  minutes -= hours * 60;
+  let timetext = "";
+  let hours = minutes % 60;
+  let minutes -= hours * 60;
 
   //Hours
   if (hours == 1) {
