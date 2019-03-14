@@ -1,0 +1,56 @@
+{
+  "Spots Left Intent":[
+    {
+      "text":"There's {spots} spots left!",
+      "speech":"There's {spots} spots left!"
+    },
+    {
+      "text":"There's {spots} parking spots",
+      "speech":"There's {spots} parking spots"
+    },
+    {
+      "text":"{spots} spots",
+      "speech":"{spots} spots"
+    },
+    {
+      "text":"Garage {garage} currently has {spots} spots left",
+      "speech":"Garage {garage} currently has {spots} spots left"
+    },
+    {
+      "text":"There are {spots} spots left in garage {garage}",
+      "speech":"There are {spots} spots left in garage {garage}"
+    }
+  ],
+  "Spots Taken Intent":[
+    {
+      "text":"In garage {garage}, there are {spots} cars parked out of {max}.",
+      "speech":"In garage {garage}, there are {spots} cars parked out of {max}. About {percent}% full."
+    },
+    {
+      "text":"There are {spots} cars out of {max} in garage {garage}",
+      "speech":"There are {spots} cars out of {max} in garage {garage}. About {percent}% full."
+    },
+    {
+      "text":"Garage {garage} is {percent}% full.",
+      "speech":"Garage {garage} is {percent}% full"
+    }
+  ],
+  "Garage Prediction Intent":[
+    {
+      "text":"{time} minutes from now, garage {garage} has {spots} out {max} available spots.",
+      "speech":"{time} minutes from now, garage {garage} has {spots} out {max} available spots. About {percent}% open spots."
+    },
+    {
+      "text":"Garage {garage} in {time} minute will have {spots} out of {max} open parking",
+      "speech":"Garage {garage} in {time} minute will have {spots} out of {max} open parking. About {percent}% open spots."
+    },
+    {
+      "text":"Garage {garage} will have {spots} out of {max} open spots in {time} minutes.",
+      "speech":"Garage {garage} will have {spots} out of {max} open spots in {time} minutes. About {percent}% open spots."
+    },
+    {
+      "text":"Garage {garage} is predicted to have {percent} chance of open spots in {time}",
+      "speech":"Garage {garage} is predicted to have {percent} chance of open spots in {time}"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ module.exports.prediction_v2 = function(garage,day,hour,min){
     //CURL the link so that it can take the results
     request(link, (function (error, response, body) {
       //Converts the body in to JSON for easy parsing
-      console.log(response.statusCode);
+
       if(response.statusCode != 200)
         reject(response.statusCode, {error:"The CuRl has been malformed or the website is down"});
 
