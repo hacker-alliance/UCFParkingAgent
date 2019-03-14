@@ -13,11 +13,11 @@ const converter = require("number-to-words");
 const format = require("string-template");
 
 
-const suggestions = require("./suggestion");
-const scraper = require("./scrape-ucf-garage");
-const predictor = require("./prediction-ucf-garage");
+const suggestions = require("./lib/suggestion");
+const scraper = require("./lib/scrape-ucf-garage");
+const predictor = require("./lib/prediction-ucf-garage");
 
-let flavortextJSON = require("./flavortext.json");
+let flavortextJSON = require("./lib/flavortext.json");
 
 const app = dialogflow();
 const restService = express();
@@ -69,7 +69,7 @@ function percentage(num,total){
 function flavortextTime (minutes) {
   let timetext = "";
   let hours = minutes % 60;
-  let minutes -= hours * 60;
+  minutes -= hours * 60;
 
   //Hours
   if (hours == 1) {
