@@ -1,11 +1,35 @@
-"use strict";
-
-const express = require("express");
+const express = require('express');
+const {
+  dialogflow,
+  Suggestions,
+  BasicCard,
+  Button,
+  SimpleResponse,
+  Image,
+  Table,
+} = require('actions-on-google');
 const bodyParser = require("body-parser");
-const scrape_garage = require("./scrape-ucf-garage");
-const predict_garage = require("./prediction-ucf-garage");
 const converter = require("number-to-words");
+const format = require("string-template");
+
+
+const suggestions = require("./lib/suggestion");
+const scraper = require("./lib/scrape-ucf-garage");
+const predictor = require("./lib/prediction-ucf-garage");
+
+let flavortextJSON = require("./lib/flavortext.json");
+
+const app = dialogflow();
 const restService = express();
+
+restService.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+restService.use(bodyParser.json());
+
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 const garages = {
   "A": 0,
@@ -27,324 +51,27 @@ const garage_capacity = {
   "Libra": 1007
 }
 
-const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-restService.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-
-restService.use(bodyParser.json());
-
-restService.post("/garage", function(req, res) {
-  var intent = intents[req.body.queryResult.intent.displayName];
-
-  console.log("Running intent: " + req.body.queryResult.intent.displayName);
-
-  if(intent != intentGaragePredict){
-    scrape_garage().then(function(garageJSON){
-        if (intent)
-          return intent(req, res, garageJSON);
-
-        return res.json({});
-    });
-  }else{
-    if(req.body.queryResult.parameters.timeuntil){
-      var date = new Date(req.body.queryResult.parameters.timeuntil);
-
-      predict_garage(days[date.getDay()],date.getHours(),date.getMinutes()).then(function(garageJSON){
-        if(intent)
-          return intent(req,res,garageJSON);
-
-        return res.json({});
-      })
-    }else{
-      res.json({});
-    }
-  }
-});
-
-restService.listen(process.env.PORT || 8000, function() {
-  console.log("Server up and listening");
-});
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-
-
-
-
-const intents = {
-  "Spots Left Intent": intentSpotsLeft,
-  "Spots Taken Intent": intentSpotsTaken,
-  "Garage Prediction Intent": intentGaragePredict,
-  "Garage Status Intent": intentGarageStatus
-}
-
-
-function subAlias(number){
-  return "<sub alias=\""+converter.toWords(number)+"\">"+number+"</sub>";
-}
-
-
-
-
-
-var flavortextSpotsLeft = {
-  0: function(garage, count) {
-    return (count < 50) ? "<speak>Only " + subAlias(count) + " spots left in Garage " + garage + "!</speak>" : "<speak>There's " + subAlias(count) + " spots left in Garage " + garage + "!</speak>";
-  },
-  1: function(garage, count) {
-    return "<speak>There's " + subAlias(count) + " parking spots in Garage " + garage + ".</speak>";
-  },
-  2: function(garage, count) {
-    return "<speak>" +subAlias(count)+ " spots in Garage " +  garage + ".</speak>";
-  },
-  3: function(garage, count) {
-    return "<speak>Garage " + garage + " currently has " + subAlias(count) + " spots left.</speak>";
-  },
-  4: function(garage, count) {
-    return "<speak>There are " + subAlias(count) + " spots left in Garage " + garage+".</speak>";
+function addsuggestions(conv){
+  for(i=0;i<suggestions.length;i++){
+    conv.ask(new Suggestions(suggestions[i]));
   }
 }
 
-function intentSpotsLeft(req, res, garageJSON){
-  var flavorCounter1 = getRandomInt(5);
-  var garage_name = req.body.queryResult.parameters.garage;
-  var responseText;
-
-  if (garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsLeft[flavorCounter1](garage_name, parseInt(garageJSON[garages[garage_name]]));
-
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": responseText
-              }
-            }
-          ],
-          "suggestions": [
-            {
-              "title": "help me"
-            },
-            {
-              "title": "garage status"
-            },
-            {
-              "title": "garage A in 20 minutes"
-            }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/UCFParking/UCFParkingAgent"
-          }
-        }
-      }
-    }
-  });
+function percentage(num,total){
+  return Math.round(Math.min(100, Math.max(0, (num/total)*100)));
 }
-
-var flavortextSpotsTaken = {
-  0: function(garage, count, total){
-    return "<speak>In " + garage + ", there are " + subAlias(count) + " cars parked out of " + subAlias(total)+".</speak>";
-  },
-  1: function(garage, count, total){
-    return "<speak>There are " + count.toString() + " cars out of " + subAlias(total) + " in Garage " + garage+".</speak>" ;
-  },
-  2: function(garage, count, total){
-    return "<speak>Garage " + garage + " is " + Math.round(Math.min(100, Math.max(0, (count/total)*100))).toString() + "% full.</speak>";
-  }
-}
-
-function intentSpotsTaken(req, res, garageJSON){
-  var flavorCounter2 = getRandomInt(3);
-  var garage_name = req.body.queryResult.parameters.garage;
-  var responseText;
-
-  if(garageJSON[garages[garage_name]])
-    responseText = flavortextSpotsTaken[flavorCounter2](garage_name, Math.max(0, garage_capacity[garage_name]-parseInt(garageJSON[garages[garage_name]])), garage_capacity[garage_name]);
-
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": responseText
-              }
-            }
-          ],
-          "suggestions": [
-            {
-              "title": "help me"
-            },
-            {
-              "title": "garage status"
-            },
-            {
-              "title": "garage A in 20 minutes"
-            }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/UCFParking/UCFParkingAgent"
-          }
-        }
-      }
-    }
-  });
-}
-
-function intentGarageStatus(req, res, garage)
-{
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": "<speak>Garage A has " + Math.round(Math.min(100, Math.max(0, ((garage[0]/garage_capacity["A"])*100))))+"% available parking. B has " + Math.round(Math.min(100, Math.max(0, ((garage[1]/garage_capacity["B"])*100))))+"%. C has " + Math.round(Math.min(100, Math.max(0, ((garage[2]/garage_capacity["C"])*100))))+"%. D has "+Math.round(Math.min(100, Math.max(0, ((garage[3]/garage_capacity["D"])*100))))+"%. H has "+Math.round(Math.min(100, Math.max(0, ((garage[4]/garage_capacity["H"])*100)))) + "%. I has "+Math.round(Math.min(100, Math.max(0, ((garage[5]/garage_capacity["I"])*100)))) +"%. Libra has "+Math.round(Math.min(100, Math.max(0, ((garage[6]/garage_capacity["Libra"])*100)))) +"%. </speak>"
-              }
-            },
-            {
-              "tableCard": {
-                "title": "Garage Status",
-                "columnProperties": [
-                  {
-                    "header": "Garage Name"
-                  },
-                  {
-                    "header": "Spaces Available"
-                  }
-                ],
-                "rows": [
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage A"
-                      },
-                      {
-                        "text": garage[0] + "/" + garage_capacity["A"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage B"
-                      },
-                      {
-                        "text": garage[1] + "/" + garage_capacity["B"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage C"
-                      },
-                      {
-                        "text": garage[2] + "/" + garage_capacity["C"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage D"
-                      },
-                      {
-                        "text": garage[3] + "/" + garage_capacity["D"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage H"
-                      },
-                      {
-                        "text": garage[4] + "/" + garage_capacity["H"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage I"
-                      },
-                      {
-                        "text": garage[5] + "/" + garage_capacity["I"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  },
-                  {
-                    "cells": [
-                      {
-                        "text": "Garage Libra"
-                      },
-                      {
-                        "text": garage[6] + "/" + garage_capacity["Libra"]
-                      }
-                    ],
-                    "dividerAfter": true
-                  }
-                ]
-              }
-            }
-          ],
-          "suggestions": [
-            {
-              "title": "help me"
-            },
-            {
-              "title": "garage B?"
-            },
-            {
-              "title": "garage A in 20 minutes"
-            }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/UCFParking/UCFParkingAgent"
-          }
-        }
-      }
-    }
-  });
-}
-
-/**
- * Formats minutes into hours / minutes
- * 
- * @param {number} minutes Total number of minutes
- * @return {string} Formatted hours / minutes string ex: "1 hour and 30 minutes"
- */
 
 function flavortextTime (minutes) {
-  var timetext = "";
-  var hours = minutes % 60;
+  let timetext = "";
+  let hours = minutes % 60;
   minutes -= hours * 60;
 
-  //Hours  
+  //Hours
   if (hours == 1) {
     timetext += "1 hour";
   }
@@ -366,68 +93,180 @@ function flavortextTime (minutes) {
   return timetext;
 }
 
-var flavortextGaragePredict = {
-  0: function(name,max,number,minute){
-    return "<speak> " + flavortextTime(minute) + " from now, Garage " + name + " will have " + subAlias(number) + " out of " + subAlias(max) + " available spots!</speak>";
-  },
-  1: function(name,max,number,minute){
-    return "<speak> Garage " + name + " in " + flavortextTime(minute) + ", will have " + subAlias(number) + " out of " + subAlias(max) + " open parking spots.</speak>";
-  },
-  2: function(name,max,number,minute){
-    return "<speak> Garage " + name + " will have " + subAlias(number) + " out of " + max + " open spots in " + flavortextTime(minute) + "!</speak>";
-  },
-  3: function(name,max,number,minute){
-    return "<speak> Garage " + name + " is predicted to have " + Math.round(Math.min(100, Math.max(0, ((number/max)*100)))) + " percent available spots in " + minute + " minutes!</speak>";
-  }
+app.intent('Default Welcome Intent', conv => {
+  console.log("Running: " + conv.intent);
+  conv.ask('Hi, how is it going?');
+  addsuggestions(conv);
+})
+
+
+app.intent('Spots Left Intent', conv => spotsLeft(conv));
+
+async function spotsLeft(conv){
+  console.log("Running: " + conv.intent);
+  const garageLetter = conv.parameters.garage;
+
+  let response = await (async ()=>{
+    let resp = await scraper();
+
+    let noSpots = resp.letter[garageLetter].available;
+    let flavorNumber = getRandomInt(flavortextJSON["Spots Left Intent"].length);
+
+    let text_response = format(flavortextJSON["Spots Left Intent"][flavorNumber].text,{
+      spots: noSpots,
+      garage: garageLetter
+    });
+
+    let speech_response = format(flavortextJSON["Spots Left Intent"][flavorNumber].speech,{
+      spots: converter.toWords(noSpots),
+      garage: garageLetter
+    })
+
+    return new SimpleResponse({
+      text: text_response,
+      speech: speech_response
+    });
+  })();
+
+  conv.add(response);
+  addsuggestions(conv);
+
+  return conv;
 }
 
-function intentGaragePredict(req, res, garageJSON){
-  var garage_name = req.body.queryResult.parameters.garage;
-  var time = new Date();
-  var delaytime = new Date(req.body.queryResult.parameters.timeuntil);
-  var second = Math.abs(time.getTime()-delaytime.getTime())/1000;
-  var minute = Math.ceil(second/60);
+app.intent('Spots Taken Intent', conv => spotsTaken(conv));
+//TODO change how jsondata comes out so we dont have to do `jsondata[garages[garageletter]]`
+async function spotsTaken(conv){
+  let intent = conv.intent;
+  console.log("Running: " + intent);
+  const garageLetter = conv.parameters.garage;
+  let response = await(async ()=>{
+    let resp = await scraper();
 
-  var responseText;
-  //Set to 3 to remove percent available for prediction
-  var flavorCounter3 = getRandomInt(3);
+    let noSpots = resp.letter[garageLetter].available;
+    let totalSpots = resp.letter[garageLetter].capacity;
+    let takenSpots = totalSpots - noSpots;
+    let percentSpot = percentage(takenSpots,totalSpots);
+    let flavorNumber = getRandomInt(flavortextJSON[intent].length);
 
-  if(garage_name != "Libra"){
-    garage_name = garage_name.charAt(0).toUpperCase();
-  }
+    let text_response = format(flavortextJSON[intent][flavorNumber].text,{
+      spots: takenSpots,
+      max: totalSpots,
+      percent: percentSpot,
+      garage: garageLetter
+    });
 
-  if(garageJSON[garage_name])
-    responseText = flavortextGaragePredict[flavorCounter3](garage_name, garage_capacity[garage_name], garageJSON[garage_name], minute);
+    let speech_response = format(flavortextJSON[intent][flavorNumber].speech,{
+      spots: converter.toWords(takenSpots),
+      max: converter.toWords(totalSpots),
+      percent: percentSpot,
+      garage: garageLetter
+    })
 
-  return res.json({
-    "payload": {
-      "google": {
-        "expectUserResponse": true,
-        "richResponse": {
-          "items": [
-            {
-              "simpleResponse": {
-                "textToSpeech": responseText
-              }
-            }
-          ],
-          "suggestions": [
-          {
-            "title": "help me"
-          },
-          {
-            "title": "garage B?"
-          },
-          {
-            "title": "garage status"
-          }
-          ],
-          "linkOutSuggestion": {
-            "destinationName": "Github",
-            "url": "https://github.com/UCFParking/UCFParkingAgent"
-          }
-        }
+    return new SimpleResponse({
+      text: text_response,
+      speech: speech_response
+    });
+  })();
+  conv.add(response);
+  addsuggestions(conv);
+
+  return conv;
+}
+
+app.intent('Garage Prediction Intent',conv=>garagePredict(conv));
+
+async function garagePredict(conv){
+  let intent = conv.intent;
+  console.log("Running: " + intent);
+  // console.log(conv);
+  const garageLetter = conv.parameters.garage;
+  let time = new Date(Date.now());
+  let targetTime = new Date(conv.parameters.timeuntil);
+  let day = days[targetTime.getDay()];
+  let hour = targetTime.getHours();
+  let min = targetTime.getMinutes();
+
+  var second = Math.abs(time.getTime()-targetTime.getTime())/1000;
+  var minsFromNow = Math.ceil(second/60);
+
+  let response = await(async()=>{
+    let resp = await predictor.prediction_v2(garageLetter,day,hour,min);
+    let noSpots = resp.available;
+    let totalSpots = garage_capacity[garageLetter];
+    let percentSpot = percentage(noSpots,totalSpots);
+    let flavorNumber = getRandomInt(flavortextJSON[intent].length);
+    let time = flavortextTime(minsFromNow);
+    let text_response = format(flavortextJSON[intent][flavorNumber].text,{
+      time: time,
+      spots: noSpots,
+      max: totalSpots,
+      percent: percentSpot,
+      garage: garageLetter
+    });
+
+    let speech_response = format(flavortextJSON[intent][flavorNumber].speech,{
+      time: time,
+      spots: converter.toWords(noSpots),
+      max: converter.toWords(totalSpots),
+      percent: percentSpot,
+      garage: garageLetter
+    })
+
+    return new SimpleResponse({
+      text: text_response,
+      speech: speech_response
+    });
+
+  })();
+  conv.add(response);
+  addsuggestions(conv);
+  return conv;
+}
+
+app.intent("Garage Status Intent",conv=>garageStatus(conv));
+
+async function garageStatus(conv){
+  let intent = conv.intent;
+  console.log("Running: " + intent);
+  let table = {
+     title: "Garage Status",
+     columns: [
+      {
+        header: "Garage Name",
+      },
+      {
+        header: "Spaces Available"
       }
-    }
-  });
+    ],
+    rows:[
+    ]
+  };
+  let response = await(async ()=>{
+    let resp = await scraper();
+    return resp;
+  })();
+
+  let speech_res = "Here are the garages. ";
+  for(i=0;i<7;i++){
+    table.rows.push({
+      cells: [response.index[i].name,response.index[i].available + "/" + response.index[i].capacity + " ("+percentage(response.index[i].available,response.index[i].capacity)+"%)"],
+      dividerAfter: true
+    });
+    speech_res += "Garage " + response.index[i].name + " has "+ percentage(response.index[i].available,response.index[i].capacity) + "% available spots. "
+  }
+  let text_res = {
+    text:"Here are the garages",
+    speech: speech_res
+  }
+  conv.add(new SimpleResponse(text_res));
+  conv.add(new Table(table));
+  addsuggestions(conv);
+
+  return conv;
 }
+restService.post("/garage", app);
+
+restService.listen(process.env.PORT || 8080, function() {
+  console.log("Server up and listening v3");
+});

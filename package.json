@@ -13,6 +13,7 @@
     "express": "^4.16.4",
     "number-to-words": "^1.2.4",
     "request": "^2.88.0",
+    "string-template": "^1.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {},
