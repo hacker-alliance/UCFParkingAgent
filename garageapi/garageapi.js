@@ -39,11 +39,12 @@ const garageDB = new Influx.InfluxDB({
 
 const app = express();
 
-/*
+/** 
  * Garage Now API
  * @version 2
- * Gets current garage load
- */
+ * Gets current garage load, use 'All' to get all garages at once
+*/
+
 app.get('/api/v2/garage/:garage/now', function (req, res) {
 	//Ask for Single Garage
 	if (req.params.garage != 'All') {
@@ -98,11 +99,11 @@ app.get('/api/v2/garage/:garage/now', function (req, res) {
 	}
 });
 
-/*
+/**
  * Garage Prediction API
  * @version 2
  * Gets triple exponential moving average of past 2 weeks
- * @todo change number of weeks when more data is available
+ * @todo change number of weeks when more data is available 
  */
 app.get('/api/v2/garage/:garage/prediction/:weekday/:hour/:minute', function (req, res) {
 	
