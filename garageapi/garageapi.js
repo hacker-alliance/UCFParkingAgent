@@ -40,44 +40,6 @@ const garageDB = new Influx.InfluxDB({
 const app = express();
 
 /*
- * Garage API
- * @version 1
- * @deprecated Use v2 of API instead
- */
-app.get('/garages', function (req, res) {
-	garageDB.query(`
-		SELECT * FROM load
-		ORDER BY time DESC
-		LIMIT 7
-	`).then(result => {
-		res.json(result);
-	}).catch(err => {
-		res.status(500).send(err.stack);
-	})
-});
-
-/*
- * Basic Seasonal Prediction API
- * @version 1
- * @deprectated Use v2 of API instead
- * Uses most recent available season for prediction
- */
-app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
-	garageDB.query(`
-		SELECT * FROM load
-		WHERE weekday=${Influx.escape.stringLit(req.params.weekday)}
-		AND hour=${Influx.escape.stringLit(req.params.hour)}
-		AND minute=${Influx.escape.stringLit(req.params.minute)}
-		ORDER BY time DESC
-		LIMIT 7
-	`).then(result => {
-		res.json(result);
-	}).catch(err => {
-		res.status(500).send(err.stack);
-	})
-});
-
-/*
  * Garage Now API
  * @version 2
  * Gets current garage load
@@ -121,7 +83,7 @@ app.get('/api/v2/garage/:garage/now', function (req, res) {
 				//Get rid of timestamp
 				delete qResult.time;
 			}
-			
+
 			//Convert to JSON
 			let qResultJSON = JSON.stringify(result);
 			//Log for debug
