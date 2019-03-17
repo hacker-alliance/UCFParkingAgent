@@ -83,30 +83,57 @@ app.get('/prediction/:weekday/:hour/:minute', function (req, res) {
  * Gets current garage load
  */
 app.get('/api/v2/garage/:garage/now', function (req, res) {
-	
-	garageDB.query(`
-		SELECT * FROM load
-		WHERE garage=${Influx.escape.stringLit(req.params.garage)}
-		ORDER BY time DESC
-		LIMIT 1
-	`).then(result => {
-		//Prepare result for JSON
-		qResult = result[0];
-		
-		//Get rid of timestamp
-		delete qResult.time;
+	//Ask for Single Garage
+	if (req.params.garage != 'All') {
+		garageDB.query(`
+			SELECT * FROM load
+			WHERE garage=${Influx.escape.stringLit(req.params.garage)}
+			ORDER BY time DESC
+			LIMIT 1
+		`).then(result => {
+			//Prepare result for JSON
+			let qResult = result[0];
+			
+			//Get rid of timestamp
+			delete qResult.time;
 
-		//Convert to JSON
-		qResultJSON = JSON.stringify(result[0]);
-		//Log for debug
-		console.log(qResultJSON);
+			//Convert to JSON
+			let qResultJSON = JSON.stringify(result[0]);
+			//Log for debug
+			console.log(qResultJSON);
 
-		//Send JSON Response
-		res.type('application/json');
-		res.send(qResultJSON);
-	}).catch(err => {
-		res.status(500).send(err.stack);
-	})
+			//Send JSON Response
+			res.type('application/json');
+			res.send(qResultJSON);
+		}).catch(err => {
+			res.status(500).send(err.stack);
+		})
+	}
+	else {
+		//Otherwise Asking for All Garages
+		garageDB.query(`
+			SELECT * FROM load
+			ORDER BY time DESC
+			LIMIT 7
+		`).then(result => {
+			//Prepare result for JSON
+			for (let qResult of result) {
+				//Get rid of timestamp
+				delete qResult.time;
+			}
+			
+			//Convert to JSON
+			let qResultJSON = JSON.stringify(result);
+			//Log for debug
+			console.log(qResultJSON);
+
+			//Send JSON Response
+			res.type('application/json');
+			res.send(qResultJSON);
+		}).catch(err => {
+			res.status(500).send(err.stack);
+		})
+	}
 });
 
 /*
