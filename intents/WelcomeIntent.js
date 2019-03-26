@@ -1,10 +1,17 @@
 module.exports = async function(conv,lib){
-
+  let intent = conv.intent;
   console.log("Running: " + conv.intent);
 
-  const {Suggestions,helper} = lib;
-  const {addSuggestions} = helper;
+  const {Suggestions,helper,SimpleResponse} = lib;
+  const {addSuggestions,flavortext,getRandomInt} = helper;
 
-  conv.ask('Hi, what garage would you like to check?');
+  let flavorNumber = getRandomInt(flavortext[intent].length);
+
+  conv.ask(new SimpleResponse({
+    text:flavortext[intent][flavorNumber].text,
+    speech:flavortext[intent][flavorNumber].speech
+  }));
+  
   addSuggestions(conv,Suggestions);
+  return conv;
 }
