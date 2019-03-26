@@ -30,13 +30,6 @@ const lib = {
   moment,
 }
 
-//intents
-const welcome = require("./intents/WelcomeIntent");
-const spotsLeft = require("./intents/SpotsLeftIntent");
-const spotsTaken = require("./intents/SpotsTakenIntent");
-const garagePredict = require("./intents/GaragePredictionIntent");
-const garageStatus = require("./intents/GarageStatusIntent");
-
 const IntentHandler = require("./intents/IntentHandler");
 
 const app = dialogflow();
@@ -49,21 +42,20 @@ restService.use(
 );
 restService.use(bodyParser.json());
 
-
+//Garage Prediction Intent Handler
 app.intent(IntentHandler["all_garage"][0],conv=>IntentHandler[IntentHandler["all_garage"][0]](conv,lib));
 
+//Default Welcome Intent Handler
 app.intent(IntentHandler["all_garage"][1],conv=>IntentHandler[IntentHandler["all_garage"][1]](conv,lib));
 
+//Spots Left Intent Handler
 app.intent(IntentHandler["all_garage"][2],conv=>IntentHandler[IntentHandler["all_garage"][2]](conv,lib));
 
+//Spots Taken Intent Handler
 app.intent(IntentHandler["all_garage"][3],conv=>IntentHandler[IntentHandler["all_garage"][3]](conv,lib));
 
+//Garage Status Intent Handler
 app.intent(IntentHandler["all_garage"][4],conv=>IntentHandler[IntentHandler["all_garage"][4]](conv,lib));
-const actionMap = new Map();
-actionMap.set()
-// for(i = 0;i<IntentHandler["all_garage"].length;i++){
-//   app.intent(IntentHandler["all_garage"][i],conv => IntentHandler[IntentHandler["all_garage"][i]](conv,lib));
-// }
 
 restService.post("/garage", app);
 
