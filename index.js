@@ -11,7 +11,7 @@ const {
 const bodyParser = require("body-parser");
 const converter = require("number-to-words");
 const format = require("string-template");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 const helper = require("./lib/helper");
 
