@@ -102,13 +102,12 @@ app.get('/api/v2/garage/:garage/now', function (req, res) {
 /**
  * Garage Prediction API
  * @version 2
- * Gets triple exponential moving average of past 2 weeks
- * @todo change number of weeks when more data is available 
+ * Gets simple moving average of past 6 weeks for prediction
  */
 app.get('/api/v2/garage/:garage/prediction/:weekday/:hour/:minute', function (req, res) {
 	
 	garageDB.query(`
-		SELECT TRIPLE_EXPONENTIAL_MOVING_AVERAGE("available", 2) FROM load
+		SELECT MOVING_AVERAGE("available", 6) FROM load
 		WHERE garage=${Influx.escape.stringLit(req.params.garage)}
 		AND weekday=${Influx.escape.stringLit(req.params.weekday)}
 		AND hour=${Influx.escape.stringLit(req.params.hour)}
@@ -128,9 +127,9 @@ app.get('/api/v2/garage/:garage/prediction/:weekday/:hour/:minute', function (re
 		qResult.hour = req.params.hour;
 		qResult.minute = req.params.minute;
 
-		//Rename triple_exponential_average to available to match other APIs
-		qResult.available = qResult.triple_exponential_moving_average;
-		delete qResult.triple_exponential_moving_average;
+		//Rename moving_average to available to match other APIs
+		qResult.available = qResult.moving_average;
+		delete qResult.moving_average;
 
 		//Round down available
 		qResult.available = Math.floor(qResult.available);
