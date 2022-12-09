@@ -10,7 +10,7 @@
     "actions-on-google": "^2.6.0",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "moment": "^2.24.0",
     "number-to-words": "^1.2.4",
     "request": "^2.88.0",
